@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Module } from "../types";
+import { DependencyGraph } from "../components/DependencyGraph";
 
 interface ModuleDetailProps {
   modules: Module[];
@@ -47,17 +48,16 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
           </div>
         </div>
 
-        {/* Dependencies Section */}
+        {/* Dependencies Section with Graph */}
         {module.dependencies.length > 0 && (
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">Dependencies</h2>
-            <ul className="list-disc list-inside space-y-2">
-              {module.dependencies.map((dep) => (
-                <li key={dep} className="text-gray-600">
-                  {dep}
-                </li>
-              ))}
-            </ul>
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h2 className="text-xl font-semibold mb-4">Dependency Graph</h2>
+              <DependencyGraph
+                moduleName={module.name}
+                dependencies={module.dependencies}
+              />
+            </div>
           </div>
         )}
       </div>
