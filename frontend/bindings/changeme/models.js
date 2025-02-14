@@ -51,6 +51,41 @@ export class ModuleResponse {
              */
             this["tags"] = [];
         }
+        if (!("version" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["version"] = "";
+        }
+        if (!("githubRepo" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["githubRepo"] = "";
+        }
+        if (!("installCommand" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["installCommand"] = "";
+        }
+        if (!("maintainer" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["maintainer"] = "";
+        }
+        if (!("dependencies" in $$source)) {
+            /**
+             * @member
+             * @type {string[]}
+             */
+            this["dependencies"] = [];
+        }
 
         Object.assign(this, $$source);
     }
@@ -62,9 +97,13 @@ export class ModuleResponse {
      */
     static createFrom($$source = {}) {
         const $$createField4_0 = $$createType0;
+        const $$createField9_0 = $$createType0;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("tags" in $$parsedSource) {
             $$parsedSource["tags"] = $$createField4_0($$parsedSource["tags"]);
+        }
+        if ("dependencies" in $$parsedSource) {
+            $$parsedSource["dependencies"] = $$createField9_0($$parsedSource["dependencies"]);
         }
         return new ModuleResponse(/** @type {Partial<ModuleResponse>} */($$parsedSource));
     }

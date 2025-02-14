@@ -7,20 +7,30 @@ import (
 
 // Module represents a Blocc module
 type Module struct {
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	LastUpdated time.Time `json:"lastUpdated" ts_type:"string"` // Use ts_type to specify the TypeScript type
-	Tags        []string  `json:"tags"`
+	ID            string    `json:"id"`
+	Name          string    `json:"name"`
+	Description   string    `json:"description"`
+	LastUpdated   time.Time `json:"lastUpdated" ts_type:"string"` // Use ts_type to specify the TypeScript type
+	Tags          []string  `json:"tags"`
+	Version       string    `json:"version"`
+	GithubRepo    string    `json:"githubRepo"`
+	InstallCommand string   `json:"installCommand"`
+	Maintainer    string    `json:"maintainer"`
+	Dependencies  []string  `json:"dependencies"`
 }
 
 // ModuleResponse is used for API responses to ensure consistent JSON serialization
 type ModuleResponse struct {
-	ID          string   `json:"id"`
-	Name        string   `json:"name"`
-	Description string   `json:"description"`
-	LastUpdated string   `json:"lastUpdated"` // ISO date string
-	Tags        []string `json:"tags"`
+	ID            string   `json:"id"`
+	Name          string   `json:"name"`
+	Description   string   `json:"description"`
+	LastUpdated   string   `json:"lastUpdated"` // ISO date string
+	Tags          []string `json:"tags"`
+	Version       string   `json:"version"`
+	GithubRepo    string   `json:"githubRepo"`
+	InstallCommand string  `json:"installCommand"`
+	Maintainer    string   `json:"maintainer"`
+	Dependencies  []string `json:"dependencies"`
 }
 
 type ModuleService struct {
@@ -29,11 +39,16 @@ type ModuleService struct {
 
 func (m Module) ToResponse() ModuleResponse {
 	return ModuleResponse{
-		ID:          m.ID,
-		Name:        m.Name,
-		Description: m.Description,
-		LastUpdated: m.LastUpdated.Format(time.RFC3339),
-		Tags:        m.Tags,
+		ID:             m.ID,
+		Name:           m.Name,
+		Description:    m.Description,
+		LastUpdated:    m.LastUpdated.Format(time.RFC3339),
+		Tags:           m.Tags,
+		Version:        m.Version,
+		GithubRepo:     m.GithubRepo,
+		InstallCommand: m.InstallCommand,
+		Maintainer:     m.Maintainer,
+		Dependencies:   m.Dependencies,
 	}
 }
 
@@ -41,18 +56,28 @@ func NewModuleService() *ModuleService {
 	// Initialize with some mock data
 	modules := []Module{
 		{
-			ID:          "1",
-			Name:        "Redis Stack",
-			Description: "Redis with additional modules for advanced data structures",
-			LastUpdated: time.Now(),
-			Tags:        []string{"database", "cache"},
+			ID:             "1",
+			Name:           "Redis Stack",
+			Description:    "Redis with additional modules for advanced data structures",
+			LastUpdated:    time.Now(),
+			Tags:           []string{"database", "cache"},
+			Version:        "7.2.0",
+			GithubRepo:     "https://github.com/redis/redis-stack",
+			InstallCommand: "blocc install redis-stack",
+			Maintainer:     "Redis Labs",
+			Dependencies:   []string{"redis-core@7.2.0"},
 		},
 		{
-			ID:          "2",
-			Name:        "PostgreSQL HA",
-			Description: "High availability PostgreSQL cluster",
-			LastUpdated: time.Now().Add(-24 * time.Hour),
-			Tags:        []string{"database", "ha"},
+			ID:             "2",
+			Name:           "PostgreSQL HA",
+			Description:    "High availability PostgreSQL cluster",
+			LastUpdated:    time.Now().Add(-24 * time.Hour),
+			Tags:           []string{"database", "ha"},
+			Version:        "15.4.0",
+			GithubRepo:     "https://github.com/zalando/patroni",
+			InstallCommand: "blocc install postgresql-ha",
+			Maintainer:     "Zalando",
+			Dependencies:   []string{"postgresql@15.4.0", "etcd@3.5.0"},
 		},
 	}
 

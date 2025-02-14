@@ -4,6 +4,11 @@ export interface Module {
   description: string;
   lastUpdated: string; // ISO date string
   tags: string[];
+  version: string;
+  githubRepo: string;
+  installCommand: string;
+  maintainer: string;
+  dependencies: string[];
 }
 
 export interface SearchState {
