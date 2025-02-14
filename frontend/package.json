@@ -5,12 +5,31 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:dev": "vite build --minify false --mode development",
-    "build": "vite build --mode production",
+    "build:dev": "tsc -b && vite build --minify false --mode development",
+    "build": "tsc -b && vite build --mode production",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "@stacc/prism-ui": "^0.3.2",
+    "@stacc/prism-ui-style": "^0.0.8",
+    "@tailwindcss/vite": "^4.0.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.6"
+  },
   "devDependencies": {
-    "vite": "^5.0.0",
-    "@wailsio/runtime": "latest"
+    "@eslint/js": "^9.19.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@wailsio/runtime": "latest",
+    "eslint": "^9.19.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "globals": "^15.14.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.22.0",
+    "vite": "^6.1.0"
   }
 }

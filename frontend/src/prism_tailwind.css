@@ -1,0 +1,181 @@
+@theme {
+    /* Font */
+    --font-family-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+    /* Spacing */
+    --spacing-0: var(--prism-space-0);
+    --spacing-025: var(--prism-space-025);
+    --spacing-050: var(--prism-space-050);
+    --spacing-075: var(--prism-space-075);
+    --spacing-100: var(--prism-space-100);
+    --spacing-150: var(--prism-space-150);
+    --spacing-200: var(--prism-space-200);
+    --spacing-300: var(--prism-space-300);
+    --spacing-400: var(--prism-space-400);
+    --spacing-500: var(--prism-space-500);
+    --spacing-600: var(--prism-space-600);
+    --spacing-800: var(--prism-space-800);
+    --spacing-1000: var(--prism-space-1000);
+
+    /* Radius */
+    --radius-0: var(--prism-radius-0);
+    --radius-050: var(--prism-radius-050);
+    --radius-075: var(--prism-radius-075);
+    --radius-100: var(--prism-radius-100);
+    --radius-150: var(--prism-radius-150);
+    --radius-200: var(--prism-radius-200);
+    --radius-300: var(--prism-radius-300);
+    --radius-400: var(--prism-radius-400);
+    --radius-500: var(--prism-radius-500);
+    --radius-600: var(--prism-radius-600);
+    --radius-800: var(--prism-radius-800);
+    --radius-1000: var(--prism-radius-1000);
+    --radius-rounded: var(--prism-radius-rounded);
+
+    /* Sizes */
+    --container-0: var(--prism-size-0);
+    --container-25: var(--prism-size-25);
+    --container-50: var(--prism-size-50);
+    --container-075: var(--prism-size-075);
+    --container-100: var(--prism-size-100);
+    --container-150: var(--prism-size-150);
+    --container-200: var(--prism-size-200);
+    --container-250: var(--prism-size-250);
+    --container-300: var(--prism-size-300);
+    --container-350: var(--prism-size-350);
+    --container-400: var(--prism-size-400);
+    --container-450: var(--prism-size-450);
+    --container-500: var(--prism-size-500);
+    --container-600: var(--prism-size-600);
+    --container-650: var(--prism-size-650);
+    --container-700: var(--prism-size-700);
+    --container-750: var(--prism-size-750);
+    --container-800: var(--prism-size-800);
+    --container-850: var(--prism-size-850);
+    --container-900: var(--prism-size-900);
+    --container-950: var(--prism-size-950);
+    --container-1000: var(--prism-size-1000);
+    --container-1050: var(--prism-size-1050);
+    --container-2000: var(--prism-size-2000);
+    --container-4000: var(--prism-size-4000);
+
+    /* Surface */
+    --color-surface-default: var(--prism-surface-default);
+    --color-surface-subtle: var(--prism-surface-subtle);
+    --color-surface-disabled: var(--prism-surface-disabled);
+    --color-surface-accent-default: var(--prism-surface-accent-default);
+    --color-surface-action-default: var(--prism-surface-action-default);
+    --color-surface-action-moderate: var(--prism-surface-action-moderate);
+    --color-surface-action-subtle: var(--prism-surface-action-subtle);
+    --color-surface-action-hover: var(--prism-surface-action-hover);
+    --color-surface-action-hover-subtle: var(--prism-surface-action-hover-subtle);
+    --color-surface-danger-default: var(--prism-surface-danger-default);
+    --color-surface-danger-moderate: var(--prism-surface-danger-moderate);
+    --color-surface-danger-subtle: var(--prism-surface-danger-subtle);
+    --color-surface-danger-hover: var(--prism-surface-danger-hover);
+    --color-surface-danger-hover-subtle: var(--prism-surface-danger-hover-subtle);
+    --color-surface-warning-default: var(--prism-surface-warning-default);
+    --color-surface-warning-subtle: var(--prism-surface-warning-subtle);
+    --color-surface-success-default: var(--prism-surface-success-default);
+    --color-surface-success-subtle: var(--prism-surface-success-subtle);
+    --color-surface-info-default: var(--prism-surface-info-default);
+    --color-surface-info-subtle: var(--prism-surface-info-subtle);
+
+    /*color- Content (Text and Icons) */
+    --color-content-default: var(--prism-content-default);
+    --color-content-subtle: var(--prism-content-subtle);
+    --color-content-inverse: var(--prism-content-inverse);
+    --color-content-disabled: var(--prism-content-disabled);
+    --color-content-action-default: var(--prism-content-action-default);
+    --color-content-action-hover: var(--prism-content-action-hover);
+    --color-content-danger-default: var(--prism-content-danger-default);
+    --color-content-danger-strong: var(--prism-content-danger-strong);
+    --color-content-warning-default: var(--prism-content-warning-default);
+    --color-content-success-default: var(--prism-content-success-default);
+    --color-content-info-default: var(--prism-content-info-default);
+
+    /*color- Stroke */
+    --color-stroke-default: var(--prism-stroke-default);
+    --color-stroke-subtle: var(--prism-stroke-subtle);
+    --color-stroke-inverse: var(--prism-stroke-inverse);
+    --color-stroke-disabled: var(--prism-stroke-disabled);
+    --color-stroke-action-default: var(--prism-stroke-action-default);
+    --color-stroke-action-subtle: var(--prism-stroke-action-subtle);
+    --color-stroke-danger-default: var(--prism-stroke-danger-default);
+    --color-stroke-danger-subtle: var(--prism-stroke-danger-subtle);
+    --color-stroke-danger-strong: var(--prism-stroke-danger-strong);
+    --color-stroke-warning-default: var(--prism-stroke-warning-default);
+    --color-stroke-warning-subtle: var(--prism-stroke-warning-subtle);
+    --color-stroke-success-default: var(--prism-stroke-success-default);
+    --color-stroke-success-subtle: var(--prism-stroke-success-subtle);
+    --color-stroke-info-default: var(--prism-stroke-info-default);
+    --color-stroke-info-subtle: var(--prism-stroke-info-subtle);
+
+    /* Background  */
+    --color-background-default: var(--prism-background-default);
+    --color-background-subtle: var(--prism-background-subtle);
+
+    /* Text */
+    --text-root-font-size: var(--prism-text-root-font-size);
+    --text-body-default-font-size: var(--prism-text-body-default-font-size);
+    --text--line-height-body-default-line-height: var(--prism-text-body-default-line-height);
+    --leading-body-default: var(--prism-text-body-default-line-height);
+    --font-weight-body-default-font-weight: var(--prism-text-body-default-font-weight);
+    --text-body-small-font-size: var(--prism-text-body-small-font-size);
+    --text--line-height-body-small-line-height: var(--prism-text-body-small-line-height);
+    --leading-body-small: var(--prism-text-body-small-line-height);
+    --font-weight-body-small-font-weight: var(--prism-text-body-small-font-weight);
+    --text-display-font-size: var(--prism-text-display-font-size);
+    --text--line-height-display-line-height: var(--prism-text-display-line-height);
+    --leading-display: var(--prism-text-display-line-height);
+    --font-weight-display-font-weight: var(--prism-text-display-font-weight);
+    --text-title-large-font-size: var(--prism-text-title-large-font-size);
+    --text--line-height-title-large-line-height: var(--prism-text-title-large-line-height);
+    --leading-title-large: var(--prism-text-title-large-line-height);
+    --font-weight-title-large-font-weight: var(--prism-text-title-large-font-weight);
+    --text-title-medium-font-size: var(--prism-text-title-medium-font-size);
+    --text--line-height-title-medium-line-height: var(--prism-text-title-medium-line-height);
+    --leading-title-medium: var(--prism-text-title-medium-line-height);
+    --font-weight-title-medium-font-weight: var(--prism-text-title-medium-font-weight);
+    --text-title-small-font-size: var(--prism-text-title-small-font-size);
+    --text--line-height-title-small-line-height: var(--prism-text-title-small-line-height);
+    --leading-title-small: var(--prism-text-title-small-line-height);
+    --font-weight-title-small-font-weight: var(--prism-text-title-small-font-weight);
+    --text-subtitle-font-size: var(--prism-text-subtitle-font-size);
+    --text--line-height-subtitle-line-height: var(--prism-text-subtitle-line-height);
+    --leading-subtitle: var(--prism-text-subtitle-line-height);
+    --font-weight-subtitle-font-weight: var(--prism-text-subtitle-font-weight);
+    --text-table-header-font-size: var(--prism-text-table-header-font-size);
+    --text--line-height-table-header-line-height: var(--prism-text-table-header-line-height);
+    --leading-table-header: var(--prism-text-table-header-line-height);
+    --font-weight-table-header-font-weight: var(--prism-text-table-header-font-weight);
+    --text-label-font-size: var(--prism-text-label-font-size);
+    --text--line-height-label-line-height: var(--prism-text-label-line-height);
+    --leading-label: var(--prism-text-label-line-height)
+    --font-weight-label-font-weight: var(--prism-text-label-font-weight);
+
+    /* Effects */
+    --shadow-default: var(--prism-shadow-default);
+    --shadow-strong: var(--prism-shadow-strong);
+    --shadow-focus: var(--prism-shadow-focus);
+}
+
+@utility stroke-width-default {
+    border-width: var(--prism-stroke-width-default);
+}
+
+@utility stroke-width-strong {
+    border-width: var(--prism-stroke-width-strong);
+}
+
+@utility stroke-width-focus {
+    border-width: var(--prism-stroke-width-focus);
+}
+
+@utility border-default {
+    border: var(--prism-border-default);
+}
+
+@utility border-strong {
+    border: var(--prism-border-strong);
+}
