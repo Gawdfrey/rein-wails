@@ -1,58 +1,69 @@
-import { useState, useEffect } from "react";
-import { GreetService } from "../bindings/changeme";
-import { Events } from "@wailsio/runtime";
-import { Button, TextField } from "@stacc/prism-ui";
+import { useEffect, useState } from "react";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Sidebar } from "./components/Sidebar";
+import { ModuleList } from "./pages/ModuleList";
+import { ModuleDetail } from "./pages/ModuleDetail";
+import { Module, SearchState } from "./types";
 
-// Define interfaces for our types
-interface TimeData {
-  data: string;
-}
-
-declare global {
-  interface Window {
-    GreetService: typeof GreetService;
-  }
-}
+import { ModuleService } from "../bindings/changeme";
 
 export function App() {
-  const [name, setName] = useState<string>("");
-  const [result, setResult] = useState<string>("");
-  const [time, setTime] = useState<string>("");
+  const [searchState, setSearchState] = useState<SearchState>({
+    query: "",
+    filters: [],
+  });
+  const [modules, setModules] = useState<Module[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Subscribe to time events
-    const unsubscribe = Events.On("time", (timeData: TimeData) => {
-      console.log("timeData", timeData);
-      setTime(timeData.data);
-    });
-
-    // Cleanup subscription on unmount
-    return () => {
-      unsubscribe();
+    const fetchModules = async () => {
+      try {
+        if (searchState.query) {
+          const results = await ModuleService.SearchModules(searchState.query);
+          setModules(results);
+        } else {
+          const allModules = await ModuleService.GetModules();
+          setModules(allModules);
+        }
+        setError(null);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch modules"
+        );
+      } finally {
+        setLoading(false);
+      }
     };
-  }, []);
 
-  const handleGreet = async () => {
-    try {
-      const greetingName = name.trim() || "anonymous";
-      console.log("greetingName", greetingName);
-      const response = await GreetService.Greet(greetingName);
-      console.log("response", response);
-      setResult(response);
-    } catch (err) {
-      console.error("Error in greeting:", err);
-    }
-  };
+    fetchModules();
+  }, [searchState.query]);
 
   return (
-    <div className="bg-background-default h-screen p-5">
-      <h1>Hello World</h1>
-      <div className="flex flex-col gap-2 w-fit">
-        <TextField value={name} onChange={setName} />
-        <Button label="Greet" onClick={handleGreet} className="w-fit" />
+    <Router>
+      <div className="flex h-screen bg-background-default">
+        <Sidebar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ModuleList
+                modules={modules}
+                searchQuery={searchState.query}
+                onSearchChange={(value) => {
+                  setSearchState((prev) => ({ ...prev, query: value }));
+                }}
+                loading={loading}
+                error={error}
+              />
+            }
+          />
+          <Route
+            path="/modules/:id"
+            element={<ModuleDetail modules={modules} />}
+          />
+        </Routes>
       </div>
-      {result && <div>{result}</div>}
-      {time && <div>Current time: {time}</div>}
-    </div>
+    </Router>
   );
 }

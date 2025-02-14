@@ -21,6 +21,8 @@ var assets embed.FS
 // and starts a goroutine that emits a time-based event every second. It subsequently runs the application and
 // logs any error that might occur.
 func main() {
+	// Create and initialize our ModuleService
+	moduleService := NewModuleService()
 
 	// Create a new Wails application by providing the necessary options.
 	// Variables 'Name' and 'Description' are for application metadata.
@@ -29,9 +31,9 @@ func main() {
 	// 'Mac' options tailor the application when running an macOS.
 	app := application.New(application.Options{
 		Name:        "rein-wails",
-		Description: "A demo of using raw HTML & CSS",
+		Description: "Blocc Module Explorer",
 		Services: []application.Service{
-			application.NewService(&GreetService{}),
+			application.NewService(moduleService),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),
@@ -47,7 +49,7 @@ func main() {
 	// 'BackgroundColour' is the background colour of the window.
 	// 'URL' is the URL that will be loaded into the webview.
 	app.NewWebviewWindowWithOptions(application.WebviewWindowOptions{
-		Title: "Window 1",
+		Title: "Blocc Module Explorer",
 		Mac: application.MacWindow{
 			InvisibleTitleBarHeight: 50,
 			Backdrop:                application.MacBackdropTranslucent,
