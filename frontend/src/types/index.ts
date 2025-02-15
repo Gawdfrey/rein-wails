@@ -1,3 +1,26 @@
+export interface ModuleAttributes {
+  githubRepo?: string;
+  documentation?: string;
+  website?: string;
+  license?: string;
+}
+
+export type ComponentType = "Backend" | "Frontend" | "ApiGateway" | "Setup";
+
+export interface ModuleComponent {
+  id: string;
+  name: string;
+  type: ComponentType;
+  description: string;
+  version: string;
+}
+
+export interface ModuleDependency {
+  id: string;
+  name: string;
+  version: string;
+}
+
 export interface Module {
   id: string;
   name: string;
@@ -5,10 +28,11 @@ export interface Module {
   lastUpdated: string; // ISO date string
   tags: string[];
   version: string;
-  githubRepo: string;
   installCommand: string;
   maintainer: string;
-  dependencies: string[];
+  dependencies: ModuleDependency[];
+  attributes: ModuleAttributes;
+  components: ModuleComponent[];
 }
 
 export interface SearchState {

@@ -7,6 +7,169 @@
 import {Create as $Create} from "@wailsio/runtime";
 
 /**
+ * @readonly
+ * @enum {string}
+ */
+export const ComponentType = {
+    /**
+     * The Go zero value for the underlying type of the enum.
+     */
+    $zero: "",
+
+    ComponentTypeBackend: "Backend",
+    ComponentTypeFrontend: "Frontend",
+    ComponentTypeApiGateway: "ApiGateway",
+    ComponentTypeSetup: "Setup",
+};
+
+export class ModuleAttributes {
+    /**
+     * Creates a new ModuleAttributes instance.
+     * @param {Partial<ModuleAttributes>} [$$source = {}] - The source object to create the ModuleAttributes.
+     */
+    constructor($$source = {}) {
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["githubRepo"] = "";
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["documentation"] = "";
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["website"] = "";
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["license"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new ModuleAttributes instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {ModuleAttributes}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new ModuleAttributes(/** @type {Partial<ModuleAttributes>} */($$parsedSource));
+    }
+}
+
+export class ModuleComponent {
+    /**
+     * Creates a new ModuleComponent instance.
+     * @param {Partial<ModuleComponent>} [$$source = {}] - The source object to create the ModuleComponent.
+     */
+    constructor($$source = {}) {
+        if (!("id" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["id"] = "";
+        }
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (!("type" in $$source)) {
+            /**
+             * @member
+             * @type {ComponentType}
+             */
+            this["type"] = (/** @type {ComponentType} */(""));
+        }
+        if (!("description" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["description"] = "";
+        }
+        if (!("version" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["version"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new ModuleComponent instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {ModuleComponent}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new ModuleComponent(/** @type {Partial<ModuleComponent>} */($$parsedSource));
+    }
+}
+
+export class ModuleDependency {
+    /**
+     * Creates a new ModuleDependency instance.
+     * @param {Partial<ModuleDependency>} [$$source = {}] - The source object to create the ModuleDependency.
+     */
+    constructor($$source = {}) {
+        if (!("id" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["id"] = "";
+        }
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (!("version" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["version"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new ModuleDependency instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {ModuleDependency}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new ModuleDependency(/** @type {Partial<ModuleDependency>} */($$parsedSource));
+    }
+}
+
+/**
  * ModuleResponse is used for API responses to ensure consistent JSON serialization
  */
 export class ModuleResponse {
@@ -58,13 +221,6 @@ export class ModuleResponse {
              */
             this["version"] = "";
         }
-        if (!("githubRepo" in $$source)) {
-            /**
-             * @member
-             * @type {string}
-             */
-            this["githubRepo"] = "";
-        }
         if (!("installCommand" in $$source)) {
             /**
              * @member
@@ -82,9 +238,23 @@ export class ModuleResponse {
         if (!("dependencies" in $$source)) {
             /**
              * @member
-             * @type {string[]}
+             * @type {ModuleDependency[]}
              */
             this["dependencies"] = [];
+        }
+        if (!("attributes" in $$source)) {
+            /**
+             * @member
+             * @type {ModuleAttributes}
+             */
+            this["attributes"] = (new ModuleAttributes());
+        }
+        if (!("components" in $$source)) {
+            /**
+             * @member
+             * @type {ModuleComponent[]}
+             */
+            this["components"] = [];
         }
 
         Object.assign(this, $$source);
@@ -97,13 +267,21 @@ export class ModuleResponse {
      */
     static createFrom($$source = {}) {
         const $$createField4_0 = $$createType0;
-        const $$createField9_0 = $$createType0;
+        const $$createField8_0 = $$createType2;
+        const $$createField9_0 = $$createType3;
+        const $$createField10_0 = $$createType5;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("tags" in $$parsedSource) {
             $$parsedSource["tags"] = $$createField4_0($$parsedSource["tags"]);
         }
         if ("dependencies" in $$parsedSource) {
-            $$parsedSource["dependencies"] = $$createField9_0($$parsedSource["dependencies"]);
+            $$parsedSource["dependencies"] = $$createField8_0($$parsedSource["dependencies"]);
+        }
+        if ("attributes" in $$parsedSource) {
+            $$parsedSource["attributes"] = $$createField9_0($$parsedSource["attributes"]);
+        }
+        if ("components" in $$parsedSource) {
+            $$parsedSource["components"] = $$createField10_0($$parsedSource["components"]);
         }
         return new ModuleResponse(/** @type {Partial<ModuleResponse>} */($$parsedSource));
     }
@@ -111,3 +289,8 @@ export class ModuleResponse {
 
 // Private type creation functions
 const $$createType0 = $Create.Array($Create.Any);
+const $$createType1 = ModuleDependency.createFrom;
+const $$createType2 = $Create.Array($$createType1);
+const $$createType3 = ModuleAttributes.createFrom;
+const $$createType4 = ModuleComponent.createFrom;
+const $$createType5 = $Create.Array($$createType4);
