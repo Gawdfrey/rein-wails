@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Environment } from "../../bindings/changeme";
-import { Button } from "@stacc/prism-ui";
+import { Button, TextField, UNSTABLE_Select } from "@stacc/prism-ui";
 
 interface EnvironmentConfigProps {
   environment: Environment;
@@ -145,43 +145,44 @@ ${Object.entries(moduleConfig.values)
         <div className="border rounded-lg p-4">
           <h3 className="text-lg font-medium mb-4">General Settings</h3>
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Resource Profile
-              </label>
-              <select
-                value={config.resourceProfile}
-                onChange={(e) =>
-                  setConfig((prev) => ({
-                    ...prev,
-                    resourceProfile: e.target.value,
-                  }))
-                }
-                disabled={!isEditing}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
-              >
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Domain Suffix
-              </label>
-              <input
-                type="text"
-                value={config.domainSuffix}
-                onChange={(e) =>
-                  setConfig((prev) => ({
-                    ...prev,
-                    domainSuffix: e.target.value,
-                  }))
-                }
-                disabled={!isEditing}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
+            <UNSTABLE_Select
+              name="resourceProfile"
+              label="Resource Profile"
+              value={config.resourceProfile}
+              onChange={(e) =>
+                setConfig((prev) => ({
+                  ...prev,
+                  resourceProfile: e.target.value,
+                }))
+              }
+              options={[
+                {
+                  label: "Small",
+                  value: "small",
+                },
+                {
+                  label: "Medium",
+                  value: "medium",
+                },
+                {
+                  label: "Large",
+                  value: "large",
+                },
+              ]}
+              disabled={!isEditing}
+            />
+            <TextField
+              name="domainSuffix"
+              label="Domain Suffix"
+              value={config.domainSuffix}
+              onChange={(value: string) =>
+                setConfig((prev) => ({
+                  ...prev,
+                  domainSuffix: value,
+                }))
+              }
+              disabled={!isEditing}
+            />
           </div>
         </div>
 

@@ -17,7 +17,6 @@ import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as ModulesIndexImport } from './routes/modules/index'
 import { Route as ModulesModuleIdImport } from './routes/modules/$moduleId'
 import { Route as SolutionsSolutionIdIndexImport } from './routes/solutions/$solutionId/index'
-import { Route as SolutionsSolutionIdEnvironmentsEnvironmentIdImport } from './routes/solutions/$solutionId/environments/$environmentId'
 import { Route as SolutionsSolutionIdEnvironmentsEnvironmentIdIndexImport } from './routes/solutions/$solutionId/environments/$environmentId/index'
 import { Route as SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsImport } from './routes/solutions/$solutionId/environments/$environmentId/settings'
 
@@ -59,25 +58,18 @@ const SolutionsSolutionIdIndexRoute = SolutionsSolutionIdIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SolutionsSolutionIdEnvironmentsEnvironmentIdRoute =
-  SolutionsSolutionIdEnvironmentsEnvironmentIdImport.update({
-    id: '/solutions/$solutionId/environments/$environmentId',
-    path: '/solutions/$solutionId/environments/$environmentId',
-    getParentRoute: () => rootRoute,
-  } as any)
-
 const SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute =
   SolutionsSolutionIdEnvironmentsEnvironmentIdIndexImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => SolutionsSolutionIdEnvironmentsEnvironmentIdRoute,
+    id: '/solutions/$solutionId/environments/$environmentId/',
+    path: '/solutions/$solutionId/environments/$environmentId/',
+    getParentRoute: () => rootRoute,
   } as any)
 
 const SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute =
   SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => SolutionsSolutionIdEnvironmentsEnvironmentIdRoute,
+    id: '/solutions/$solutionId/environments/$environmentId/settings',
+    path: '/solutions/$solutionId/environments/$environmentId/settings',
+    getParentRoute: () => rootRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -126,49 +118,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsSolutionIdIndexImport
       parentRoute: typeof rootRoute
     }
-    '/solutions/$solutionId/environments/$environmentId': {
-      id: '/solutions/$solutionId/environments/$environmentId'
-      path: '/solutions/$solutionId/environments/$environmentId'
-      fullPath: '/solutions/$solutionId/environments/$environmentId'
-      preLoaderRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdImport
-      parentRoute: typeof rootRoute
-    }
     '/solutions/$solutionId/environments/$environmentId/settings': {
       id: '/solutions/$solutionId/environments/$environmentId/settings'
-      path: '/settings'
+      path: '/solutions/$solutionId/environments/$environmentId/settings'
       fullPath: '/solutions/$solutionId/environments/$environmentId/settings'
       preLoaderRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsImport
-      parentRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdImport
+      parentRoute: typeof rootRoute
     }
     '/solutions/$solutionId/environments/$environmentId/': {
       id: '/solutions/$solutionId/environments/$environmentId/'
-      path: '/'
-      fullPath: '/solutions/$solutionId/environments/$environmentId/'
+      path: '/solutions/$solutionId/environments/$environmentId'
+      fullPath: '/solutions/$solutionId/environments/$environmentId'
       preLoaderRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdIndexImport
-      parentRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdImport
+      parentRoute: typeof rootRoute
     }
   }
 }
 
 // Create and export the route tree
-
-interface SolutionsSolutionIdEnvironmentsEnvironmentIdRouteChildren {
-  SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute
-  SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute
-}
-
-const SolutionsSolutionIdEnvironmentsEnvironmentIdRouteChildren: SolutionsSolutionIdEnvironmentsEnvironmentIdRouteChildren =
-  {
-    SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute:
-      SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute,
-    SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute:
-      SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute,
-  }
-
-const SolutionsSolutionIdEnvironmentsEnvironmentIdRouteWithChildren =
-  SolutionsSolutionIdEnvironmentsEnvironmentIdRoute._addFileChildren(
-    SolutionsSolutionIdEnvironmentsEnvironmentIdRouteChildren,
-  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -177,9 +144,8 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
   '/solutions/$solutionId': typeof SolutionsSolutionIdIndexRoute
-  '/solutions/$solutionId/environments/$environmentId': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdRouteWithChildren
   '/solutions/$solutionId/environments/$environmentId/settings': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute
-  '/solutions/$solutionId/environments/$environmentId/': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute
+  '/solutions/$solutionId/environments/$environmentId': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -201,7 +167,6 @@ export interface FileRoutesById {
   '/settings/': typeof SettingsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
   '/solutions/$solutionId/': typeof SolutionsSolutionIdIndexRoute
-  '/solutions/$solutionId/environments/$environmentId': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdRouteWithChildren
   '/solutions/$solutionId/environments/$environmentId/settings': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute
   '/solutions/$solutionId/environments/$environmentId/': typeof SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute
 }
@@ -215,9 +180,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/solutions'
     | '/solutions/$solutionId'
-    | '/solutions/$solutionId/environments/$environmentId'
     | '/solutions/$solutionId/environments/$environmentId/settings'
-    | '/solutions/$solutionId/environments/$environmentId/'
+    | '/solutions/$solutionId/environments/$environmentId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -236,7 +200,6 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/solutions/'
     | '/solutions/$solutionId/'
-    | '/solutions/$solutionId/environments/$environmentId'
     | '/solutions/$solutionId/environments/$environmentId/settings'
     | '/solutions/$solutionId/environments/$environmentId/'
   fileRoutesById: FileRoutesById
@@ -249,7 +212,8 @@ export interface RootRouteChildren {
   SettingsIndexRoute: typeof SettingsIndexRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
   SolutionsSolutionIdIndexRoute: typeof SolutionsSolutionIdIndexRoute
-  SolutionsSolutionIdEnvironmentsEnvironmentIdRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdRouteWithChildren
+  SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute
+  SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute: typeof SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -259,8 +223,10 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsIndexRoute: SettingsIndexRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
   SolutionsSolutionIdIndexRoute: SolutionsSolutionIdIndexRoute,
-  SolutionsSolutionIdEnvironmentsEnvironmentIdRoute:
-    SolutionsSolutionIdEnvironmentsEnvironmentIdRouteWithChildren,
+  SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute:
+    SolutionsSolutionIdEnvironmentsEnvironmentIdSettingsRoute,
+  SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute:
+    SolutionsSolutionIdEnvironmentsEnvironmentIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -279,7 +245,8 @@ export const routeTree = rootRoute
         "/settings/",
         "/solutions/",
         "/solutions/$solutionId/",
-        "/solutions/$solutionId/environments/$environmentId"
+        "/solutions/$solutionId/environments/$environmentId/settings",
+        "/solutions/$solutionId/environments/$environmentId/"
       ]
     },
     "/": {
@@ -300,20 +267,11 @@ export const routeTree = rootRoute
     "/solutions/$solutionId/": {
       "filePath": "solutions/$solutionId/index.tsx"
     },
-    "/solutions/$solutionId/environments/$environmentId": {
-      "filePath": "solutions/$solutionId/environments/$environmentId.tsx",
-      "children": [
-        "/solutions/$solutionId/environments/$environmentId/settings",
-        "/solutions/$solutionId/environments/$environmentId/"
-      ]
-    },
     "/solutions/$solutionId/environments/$environmentId/settings": {
-      "filePath": "solutions/$solutionId/environments/$environmentId/settings.tsx",
-      "parent": "/solutions/$solutionId/environments/$environmentId"
+      "filePath": "solutions/$solutionId/environments/$environmentId/settings.tsx"
     },
     "/solutions/$solutionId/environments/$environmentId/": {
-      "filePath": "solutions/$solutionId/environments/$environmentId/index.tsx",
-      "parent": "/solutions/$solutionId/environments/$environmentId"
+      "filePath": "solutions/$solutionId/environments/$environmentId/index.tsx"
     }
   }
 }
