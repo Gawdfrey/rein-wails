@@ -152,9 +152,9 @@ func (s *SolutionService) GetSolutions() []Solution {
 }
 
 func (s *SolutionService) GetSolution(id string) *Solution {
-	for _, solution := range s.solutions {
-		if solution.ID == id {
-			return &solution
+	for i := range s.solutions {
+		if s.solutions[i].ID == id {
+			return &s.solutions[i]
 		}
 	}
 	return nil
@@ -201,6 +201,78 @@ func (s *SolutionService) AddEnvironment(solutionId string, req AddEnvironmentRe
 			break
 		}
 	}
+
+	return nil
+}
+
+// IsDevelopmentEnvironment checks if an environment is a development environment
+func (s *SolutionService) IsDevelopmentEnvironment(env Environment) bool {
+	// Check if the name or namespace contains development-related terms
+	nameLower := strings.ToLower(env.Name)
+	namespaceLower := strings.ToLower(env.Namespace)
+	return strings.Contains(nameLower, "dev") || 
+		   strings.Contains(namespaceLower, "dev") ||
+		   strings.Contains(nameLower, "development") ||
+		   strings.Contains(namespaceLower, "development")
+}
+
+// InstallModule installs a module in a development environment
+func (s *SolutionService) InstallModule(solutionId string, environmentId string, moduleId string, version string) error {
+	// Find the solution
+	solution := s.GetSolution(solutionId)
+	if solution == nil {
+		return fmt.Errorf("solution not found")
+	}
+
+	// Find the environment
+	var env *Environment
+	for i := range solution.Environments {
+		if solution.Environments[i].ID == environmentId {
+			env = &solution.Environments[i]
+			break
+		}
+	}
+	if env == nil {
+		return fmt.Errorf("environment not found")
+	}
+
+	// Check if this is a development environment
+	if !s.IsDevelopmentEnvironment(*env) {
+		return fmt.Errorf("module installation is only allowed in development environments")
+	}
+
+	// Check if module is already installed
+	for _, module := range env.Modules {
+		if module.ModuleID == moduleId {
+			return fmt.Errorf("module is already installed")
+		}
+	}
+
+	// Add the module to the environment
+	env.Modules = append(env.Modules, EnvironmentModule{
+		ModuleID: moduleId,
+		Version:  version,
+		Status:   EnvironmentStatusStopped,
+	})
+
+	// Add the module to the solution if it's not already there
+	moduleExists := false
+	for _, module := range solution.Modules {
+		if module.ModuleID == moduleId {
+			moduleExists = true
+			break
+		}
+	}
+	if !moduleExists {
+		solution.Modules = append(solution.Modules, SolutionModule{
+			ModuleID: moduleId,
+			Version:  version,
+		})
+	}
+
+	// Update timestamps
+	env.LastDeployed = time.Now()
+	solution.UpdatedAt = time.Now()
 
 	return nil
 } 

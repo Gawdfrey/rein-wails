@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ComponentType } from "../types";
 import { DependencyGraph } from "../components/DependencyGraph";
 import { ModuleResponse, ModuleService } from "../../bindings/changeme";
+import { InstallToEnvironmentModal } from "../components/InstallToEnvironmentModal";
 
 interface ModuleDetailProps {
   modules: ModuleResponse[];
@@ -42,6 +43,7 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
   const module = modules.find((m) => m.id === id);
   const [readme, setReadme] = useState<string>("");
   const [readmeLoading, setReadmeLoading] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
 
   useEffect(() => {
     const fetchReadme = async () => {
@@ -84,10 +86,12 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
       {/* Main Content */}
       <div className="flex-1 p-8 pr-2">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            {module.name}
-          </h1>
-          <p className="text-xl text-gray-600 mb-6">{module.description}</p>
+          <div className="mb-4">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">
+              {module.name}
+            </h1>
+            <p className="text-xl text-gray-600 mb-6">{module.description}</p>
+          </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             {module.tags.map((tag) => (
@@ -104,8 +108,16 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
         {/* Installation Section */}
         <div className="bg-gray-50 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Installation</h2>
-          <div className="bg-gray-900 rounded-lg p-4 font-mono text-white">
-            <code>{module.installCommand}</code>
+          <div className="flex gap-4 items-center">
+            <div className="flex-1 bg-gray-900 rounded-lg p-4 font-mono text-white">
+              <code>{module.installCommand}</code>
+            </div>
+            <button
+              onClick={() => setShowInstallModal(true)}
+              className="px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex-shrink-0 font-medium"
+            >
+              Install
+            </button>
           </div>
         </div>
 
@@ -241,6 +253,14 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
           </div>
         </div>
       </div>
+
+      {showInstallModal && (
+        <InstallToEnvironmentModal
+          moduleId={module.id}
+          version={module.version}
+          onClose={() => setShowInstallModal(false)}
+        />
+      )}
     </div>
   );
 }

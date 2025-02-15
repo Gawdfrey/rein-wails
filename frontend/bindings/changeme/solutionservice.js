@@ -58,6 +58,29 @@ export function GetSolutions() {
     return $typingPromise;
 }
 
+/**
+ * InstallModule installs a module in a development environment
+ * @param {string} solutionId
+ * @param {string} environmentId
+ * @param {string} moduleId
+ * @param {string} version
+ * @returns {Promise<void> & { cancel(): void }}
+ */
+export function InstallModule(solutionId, environmentId, moduleId, version) {
+    let $resultPromise = /** @type {any} */($Call.ByID(3769213321, solutionId, environmentId, moduleId, version));
+    return $resultPromise;
+}
+
+/**
+ * IsDevelopmentEnvironment checks if an environment is a development environment
+ * @param {$models.Environment} env
+ * @returns {Promise<boolean> & { cancel(): void }}
+ */
+export function IsDevelopmentEnvironment(env) {
+    let $resultPromise = /** @type {any} */($Call.ByID(3265019928, env));
+    return $resultPromise;
+}
+
 // Private type creation functions
 const $$createType0 = $models.Environment.createFrom;
 const $$createType1 = $Create.Array($$createType0);

@@ -7,13 +7,27 @@ import {
 } from "../../bindings/changeme";
 import { DependencyGraph } from "../components/DependencyGraph";
 import { AddEnvironmentModal } from "../components/AddEnvironmentModal";
+import { InstallModuleModal } from "../components/InstallModuleModal";
 
-function EnvironmentCard({ environment }: { environment: Environment }) {
+function EnvironmentCard({
+  environment,
+  solutionId,
+  onModuleInstalled,
+}: {
+  environment: Environment;
+  solutionId: string;
+  onModuleInstalled: () => void;
+}) {
+  const [showInstallModal, setShowInstallModal] = useState(false);
   const statusColors = {
     running: "bg-green-50 text-green-700",
     stopped: "bg-gray-50 text-gray-700",
     error: "bg-red-50 text-red-700",
   };
+
+  const isDevelopment =
+    environment.name.toLowerCase().includes("dev") ||
+    environment.namespace.toLowerCase().includes("dev");
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
@@ -54,9 +68,27 @@ function EnvironmentCard({ environment }: { environment: Environment }) {
         ))}
       </div>
 
-      <div className="mt-4 text-sm text-gray-500">
+      <div className="mt-4 text-sm text-gray-500 mb-4">
         Last deployed: {new Date(environment.lastDeployed).toLocaleString()}
       </div>
+
+      {isDevelopment && (
+        <button
+          onClick={() => setShowInstallModal(true)}
+          className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+        >
+          Install Module
+        </button>
+      )}
+
+      {showInstallModal && (
+        <InstallModuleModal
+          solutionId={solutionId}
+          environmentId={environment.id}
+          onClose={() => setShowInstallModal(false)}
+          onModuleInstalled={onModuleInstalled}
+        />
+      )}
     </div>
   );
 }
@@ -139,7 +171,12 @@ export function SolutionDetail() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {solution.environments.map((env) => (
-            <EnvironmentCard key={env.id} environment={env} />
+            <EnvironmentCard
+              key={env.id}
+              environment={env}
+              solutionId={solution.id}
+              onModuleInstalled={fetchSolution}
+            />
           ))}
         </div>
       </div>

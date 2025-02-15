@@ -90,6 +90,51 @@ func NewModuleService() *ModuleService {
 	// Initialize with some mock data
 	modules := []Module{
 		{
+			ID:             "decision",
+			Name:           "Decision Engine",
+			Description:    "Comprehensive decision management system with case handling and business rules engine",
+			LastUpdated:    time.Now(),
+			Tags:           []string{"business-logic", "workflow", "rules-engine"},
+			Version:        "1.0.0",
+			InstallCommand: "blocc install decision",
+			Maintainer:     "Blocc Team",
+			Dependencies:   []ModuleDependency{},
+			Attributes: ModuleAttributes{
+				Documentation: "https://docs.blocc.dev/decision",
+				License:       "Apache-2.0",
+			},
+			Components: []ModuleComponent{
+				{
+					ID:          "decision-api",
+					Name:        "Decision API Gateway",
+					Type:        ComponentTypeApiGateway,
+					Description: "API Gateway for decision engine services",
+					Version:     "1.0.0",
+				},
+				{
+					ID:          "case-manager",
+					Name:        "Case Manager Frontend",
+					Type:        ComponentTypeFrontend,
+					Description: "User interface for managing cases and workflows",
+					Version:     "1.0.0",
+				},
+				{
+					ID:          "control-panel",
+					Name:        "Control Panel Frontend",
+					Type:        ComponentTypeFrontend,
+					Description: "Administrative interface for managing rules and configurations",
+					Version:     "1.0.0",
+				},
+				{
+					ID:          "decision-engine",
+					Name:        "Decision Engine",
+					Type:        ComponentTypeBackend,
+					Description: "Core decision engine for processing business rules",
+					Version:     "1.0.0",
+				},
+			},
+		},
+		{
 			ID:             "redis-stack",
 			Name:           "Redis Stack",
 			Description:    "Redis with additional modules for advanced data structures",
