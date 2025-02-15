@@ -27,7 +27,7 @@ export function ModuleList({
       <div className="relative z-10 p-8">
         <div className="max-w-3xl mx-auto mt-16">
           <div className="h-32 mb-8 flex items-center justify-center">
-            <div className="text-4xl font-bold text-gray-700">
+            <div className="text-4xl font-bold text-content-default">
               Blocc Catalog
             </div>
           </div>

@@ -268,13 +268,6 @@ export class ModuleComponent {
              */
             this["description"] = "";
         }
-        if (!("version" in $$source)) {
-            /**
-             * @member
-             * @type {string}
-             */
-            this["version"] = "";
-        }
 
         Object.assign(this, $$source);
     }

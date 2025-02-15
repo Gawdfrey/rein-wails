@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SolutionService } from "../../bindings/changeme";
+import { Button } from "@stacc/prism-ui";
 
 interface AddEnvironmentModalProps {
   solutionId: string;
@@ -39,7 +40,7 @@ export function AddEnvironmentModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-full max-w-md">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-800">
@@ -95,20 +96,17 @@ export function AddEnvironmentModal({
           </div>
 
           <div className="flex justify-end gap-3 mt-6">
-            <button
+            <Button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
-            >
-              Cancel
-            </button>
-            <button
+              label="Cancel"
+              variant="outline"
+            />
+            <Button
               type="submit"
+              label={loading ? "Adding..." : "Add Environment"}
               disabled={loading}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-            >
-              {loading ? "Adding..." : "Add Environment"}
-            </button>
+            />
           </div>
         </form>
       </div>

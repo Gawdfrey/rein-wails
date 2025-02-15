@@ -26,7 +26,6 @@ type ModuleComponent struct {
 	Name        string        `json:"name"`
 	Type        ComponentType `json:"type"`
 	Description string        `json:"description"`
-	Version     string        `json:"version"`
 }
 
 type ModuleDependency struct {
@@ -109,28 +108,24 @@ func NewModuleService() *ModuleService {
 					Name:        "Decision API Gateway",
 					Type:        ComponentTypeApiGateway,
 					Description: "API Gateway for decision engine services",
-					Version:     "1.0.0",
 				},
 				{
 					ID:          "case-manager",
 					Name:        "Case Manager Frontend",
 					Type:        ComponentTypeFrontend,
 					Description: "User interface for managing cases and workflows",
-					Version:     "1.0.0",
 				},
 				{
 					ID:          "control-panel",
 					Name:        "Control Panel Frontend",
 					Type:        ComponentTypeFrontend,
 					Description: "Administrative interface for managing rules and configurations",
-					Version:     "1.0.0",
 				},
 				{
 					ID:          "decision-engine",
 					Name:        "Decision Engine",
 					Type:        ComponentTypeBackend,
 					Description: "Core decision engine for processing business rules",
-					Version:     "1.0.0",
 				},
 			},
 		},
@@ -162,14 +157,12 @@ func NewModuleService() *ModuleService {
 					Name:        "Redis Server",
 					Type:        ComponentTypeBackend,
 					Description: "Core Redis server with additional modules",
-					Version:     "7.2.0",
 				},
 				{
 					ID:          "redis-setup",
 					Name:        "Redis Setup",
 					Type:        ComponentTypeSetup,
 					Description: "Configuration and initialization scripts",
-					Version:     "1.0.0",
 				},
 			},
 		},
@@ -206,28 +199,24 @@ func NewModuleService() *ModuleService {
 					Name:        "PostgreSQL Server",
 					Type:        ComponentTypeBackend,
 					Description: "PostgreSQL database server",
-					Version:     "15.4.0",
 				},
 				{
 					ID:          "patroni",
 					Name:        "Patroni",
 					Type:        ComponentTypeBackend,
 					Description: "HA controller for PostgreSQL",
-					Version:     "3.1.0",
 				},
 				{
 					ID:          "pg-api",
 					Name:        "PostgreSQL API",
 					Type:        ComponentTypeApiGateway,
 					Description: "REST API for cluster management",
-					Version:     "1.0.0",
 				},
 				{
 					ID:          "pg-setup",
 					Name:        "PostgreSQL Setup",
 					Type:        ComponentTypeSetup,
 					Description: "Cluster initialization and configuration",
-					Version:     "1.0.0",
 				},
 			},
 		},

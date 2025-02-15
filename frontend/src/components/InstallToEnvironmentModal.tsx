@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { SolutionService, Solution } from "../../bindings/changeme";
+import { Button } from "@stacc/prism-ui";
 
 interface InstallToEnvironmentModalProps {
   moduleId: string;
@@ -161,13 +162,11 @@ export function InstallToEnvironmentModal({
               >
                 Cancel
               </button>
-              <button
+              <Button
                 type="submit"
+                label={isLoading ? "Installing..." : "Install"}
                 disabled={isLoading || !selectedEnvironment}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
-              >
-                {isLoading ? "Installing..." : "Install"}
-              </button>
+              />
             </div>
           </form>
         )}

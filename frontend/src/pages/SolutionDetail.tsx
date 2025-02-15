@@ -8,6 +8,7 @@ import {
 import { DependencyGraph } from "../components/DependencyGraph";
 import { AddEnvironmentModal } from "../components/AddEnvironmentModal";
 import { InstallModuleModal } from "../components/InstallModuleModal";
+import { Button } from "@stacc/prism-ui";
 
 function EnvironmentCard({
   environment,
@@ -73,12 +74,10 @@ function EnvironmentCard({
       </div>
 
       {isDevelopment && (
-        <button
+        <Button
+          label="Install Module"
           onClick={() => setShowInstallModal(true)}
-          className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
-        >
-          Install Module
-        </button>
+        />
       )}
 
       {showInstallModal && (
@@ -156,12 +155,10 @@ export function SolutionDetail() {
               Customer: {solution.customer}
             </p>
           </div>
-          <button
+          <Button
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            Add Environment
-          </button>
+            label="Add Environment"
+          />
         </div>
       </div>
 
