@@ -11,7 +11,7 @@ export function Sidebar() {
   const isSettingsPage = router.location.pathname.startsWith("/settings");
 
   return (
-    <div className="w-64 min-w-64 h-full max-w-64 min-h-screen bg-gray-100 p-4 border-r border-gray-200">
+    <div className="w-64 min-w-64 max-w-64 h-screen sticky top-0 bg-gray-100 p-4 border-r border-gray-200 overflow-y-auto">
       <Link to="/" className="block mb-4">
         <h2 className="text-xl font-semibold hover:text-blue-600 transition-colors">
           Blocc
