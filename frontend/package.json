@@ -17,6 +17,7 @@
     "@tanstack/react-router": "^1.105.0",
     "@xyflow/react": "^12.4.3",
     "github-markdown-css": "^5.8.1",
+    "kbar": "^0.1.0-beta.46",
     "react": "^19.0.0",
     "react-aria-components": "^1.6.0",
     "react-dom": "^19.0.0"

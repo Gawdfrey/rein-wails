@@ -14,7 +14,7 @@ function RouteComponent() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]" />
         <div className="relative z-10 max-w-6xl mx-auto">
           <h1 className="text-5xl font-bold mb-6 text-gray-900">
-            Welcome to Blocc
+            Welcome to Blocc UI
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl">
             Your centralized platform for managing infrastructure modules and

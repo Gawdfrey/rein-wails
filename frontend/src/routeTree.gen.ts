@@ -15,7 +15,6 @@ import { Route as IndexImport } from './routes/index'
 import { Route as SolutionsIndexImport } from './routes/solutions/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as ModulesIndexImport } from './routes/modules/index'
-import { Route as SolutionsIdImport } from './routes/solutions.$id'
 import { Route as ModulesModuleIdImport } from './routes/modules/$moduleId'
 import { Route as SolutionsSolutionIdIndexImport } from './routes/solutions/$solutionId/index'
 import { Route as SolutionsSolutionIdEnvironmentsEnvironmentIdImport } from './routes/solutions/$solutionId/environments/$environmentId'
@@ -43,12 +42,6 @@ const SettingsIndexRoute = SettingsIndexImport.update({
 const ModulesIndexRoute = ModulesIndexImport.update({
   id: '/modules/',
   path: '/modules/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SolutionsIdRoute = SolutionsIdImport.update({
-  id: '/solutions/$id',
-  path: '/solutions/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -87,13 +80,6 @@ declare module '@tanstack/react-router' {
       path: '/modules/$moduleId'
       fullPath: '/modules/$moduleId'
       preLoaderRoute: typeof ModulesModuleIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/solutions/$id': {
-      id: '/solutions/$id'
-      path: '/solutions/$id'
-      fullPath: '/solutions/$id'
-      preLoaderRoute: typeof SolutionsIdImport
       parentRoute: typeof rootRoute
     }
     '/modules/': {
@@ -139,7 +125,6 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/modules/$moduleId': typeof ModulesModuleIdRoute
-  '/solutions/$id': typeof SolutionsIdRoute
   '/modules': typeof ModulesIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
@@ -150,7 +135,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/modules/$moduleId': typeof ModulesModuleIdRoute
-  '/solutions/$id': typeof SolutionsIdRoute
   '/modules': typeof ModulesIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
@@ -162,7 +146,6 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/modules/$moduleId': typeof ModulesModuleIdRoute
-  '/solutions/$id': typeof SolutionsIdRoute
   '/modules/': typeof ModulesIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
@@ -175,7 +158,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/modules/$moduleId'
-    | '/solutions/$id'
     | '/modules'
     | '/settings'
     | '/solutions'
@@ -185,7 +167,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/modules/$moduleId'
-    | '/solutions/$id'
     | '/modules'
     | '/settings'
     | '/solutions'
@@ -195,7 +176,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/modules/$moduleId'
-    | '/solutions/$id'
     | '/modules/'
     | '/settings/'
     | '/solutions/'
@@ -207,7 +187,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulesModuleIdRoute: typeof ModulesModuleIdRoute
-  SolutionsIdRoute: typeof SolutionsIdRoute
   ModulesIndexRoute: typeof ModulesIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
@@ -218,7 +197,6 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulesModuleIdRoute: ModulesModuleIdRoute,
-  SolutionsIdRoute: SolutionsIdRoute,
   ModulesIndexRoute: ModulesIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
@@ -239,7 +217,6 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/modules/$moduleId",
-        "/solutions/$id",
         "/modules/",
         "/settings/",
         "/solutions/",
@@ -252,9 +229,6 @@ export const routeTree = rootRoute
     },
     "/modules/$moduleId": {
       "filePath": "modules/$moduleId.tsx"
-    },
-    "/solutions/$id": {
-      "filePath": "solutions.$id.tsx"
     },
     "/modules/": {
       "filePath": "modules/index.tsx"
