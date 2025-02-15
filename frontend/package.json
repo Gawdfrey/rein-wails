@@ -13,20 +13,22 @@
   "dependencies": {
     "@stacc/prism-ui": "^0.3.2",
     "@stacc/prism-ui-style": "^0.0.8",
+    "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-router": "^1.105.0",
     "@xyflow/react": "^12.4.3",
     "github-markdown-css": "^5.8.1",
     "react": "^19.0.0",
     "react-aria-components": "^1.6.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.5"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.6",
+    "@tanstack/router-devtools": "^1.105.0",
+    "@tanstack/router-plugin": "^1.105.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
     "@wailsio/runtime": "latest",
     "eslint": "^9.19.0",

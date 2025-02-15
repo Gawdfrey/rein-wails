@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import {
   ReactFlow,
   Node,
@@ -12,7 +12,7 @@ import {
   NodeMouseHandler,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { ModuleDependency } from "../types";
+import { ModuleDependency } from "../../bindings/changeme";
 
 interface DependencyGraphProps {
   moduleName: string;
@@ -85,7 +85,10 @@ export function DependencyGraph({
   const onNodeClick: NodeMouseHandler = useCallback(
     (_, node) => {
       if (node.id !== "main") {
-        navigate(`/modules/${node.id}`);
+        navigate({
+          to: "/modules/$moduleId",
+          params: { moduleId: node.id },
+        });
       }
     },
     [navigate]

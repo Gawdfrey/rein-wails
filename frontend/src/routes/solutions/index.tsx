@@ -1,45 +1,21 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { SolutionService, Solution } from "../../bindings/changeme";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@stacc/prism-ui";
+import { queries } from "../../queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+export const Route = createFileRoute("/solutions/")({
+  component: SolutionList,
+  loader({ context: { queryClient } }) {
+    queryClient.ensureQueryData(queries.getSolutions());
+  },
+});
 
 export function SolutionList() {
-  const [solutions, setSolutions] = useState<Solution[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const solutionsQuery = useSuspenseQuery(queries.getSolutions());
+  const solutions = solutionsQuery.data;
 
-  useEffect(() => {
-    const fetchSolutions = async () => {
-      try {
-        const results = await SolutionService.GetSolutions();
-        setSolutions(results);
-        setError(null);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch solutions"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSolutions();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-8">
-        <div className="bg-red-50 text-red-700 p-4 rounded-lg">{error}</div>
-      </div>
-    );
+  if (!solutions) {
+    return <div>No solutions found</div>;
   }
 
   return (
@@ -53,7 +29,10 @@ export function SolutionList() {
         {solutions.map((solution) => (
           <Link
             key={solution.id}
-            to={`/solutions/${solution.id}`}
+            to="/solutions/$solutionId"
+            params={{
+              solutionId: solution.id,
+            }}
             className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
             <div className="flex justify-between items-start mb-4">

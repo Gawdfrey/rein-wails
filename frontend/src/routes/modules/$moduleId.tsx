@@ -1,15 +1,25 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ComponentType } from "../types";
-import { DependencyGraph } from "../components/DependencyGraph";
-import { ModuleResponse, ModuleService } from "../../bindings/changeme";
-import { InstallToEnvironmentModal } from "../components/InstallToEnvironmentModal";
+import { createFileRoute } from "@tanstack/react-router";
+import { ComponentType } from "../../../bindings/changeme";
+import { useState } from "react";
+import { Terminal } from "../../components/Terminal";
 import { Button } from "@stacc/prism-ui";
-import { Terminal } from "../components/Terminal";
+import { DependencyGraph } from "../../components/DependencyGraph";
+import { InstallToEnvironmentModal } from "../../components/InstallToEnvironmentModal";
+import { queries } from "../../queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-interface ModuleDetailProps {
-  modules: ModuleResponse[];
-}
+export const Route = createFileRoute("/modules/$moduleId")({
+  component: ModuleDetail,
+  params: {
+    parse: ({ moduleId }) => ({
+      moduleId,
+    }),
+  },
+  loader({ context: { queryClient }, params: { moduleId } }) {
+    queryClient.ensureQueryData(queries.getModuleById(moduleId));
+    queryClient.ensureQueryData(queries.getModuleReadme(moduleId));
+  },
+});
 
 function AttributeLink({
   href,
@@ -40,30 +50,14 @@ const componentTypeIcons: Record<ComponentType, string> = {
   Setup: "🔧",
 };
 
-export function ModuleDetail({ modules }: ModuleDetailProps) {
-  const { id } = useParams();
-  const module = modules.find((m) => m.id === id);
-  const [readme, setReadme] = useState<string>("");
-  const [readmeLoading, setReadmeLoading] = useState(false);
+export function ModuleDetail() {
+  const { moduleId } = Route.useParams();
+  const moduleQuery = useSuspenseQuery(queries.getModuleById(moduleId));
+  const module = moduleQuery.data;
+  const readmeQuery = useSuspenseQuery(queries.getModuleReadme(moduleId));
+  const readme = readmeQuery.data;
+  const readmeLoading = readmeQuery.isLoading;
   const [showInstallModal, setShowInstallModal] = useState(false);
-
-  useEffect(() => {
-    const fetchReadme = async () => {
-      if (module?.attributes.githubRepo) {
-        setReadmeLoading(true);
-        try {
-          const content = await ModuleService.GetModuleReadme(module.id);
-          setReadme(content);
-        } catch (error) {
-          console.error("Failed to fetch README:", error);
-        } finally {
-          setReadmeLoading(false);
-        }
-      }
-    };
-
-    fetchReadme();
-  }, [module]);
 
   if (!module) {
     return (
@@ -74,14 +68,17 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
   }
 
   // Group components by type
-  const componentsByType = module.components.reduce((acc, component) => {
-    const type = component.type as ComponentType;
-    if (!acc[type]) {
-      acc[type] = [];
-    }
-    acc[type].push(component);
-    return acc;
-  }, {} as Record<ComponentType, typeof module.components>);
+  const componentsByType = module.components.reduce(
+    (acc, component) => {
+      const type = component.type as ComponentType;
+      if (!acc[type]) {
+        acc[type] = [];
+      }
+      acc[type].push(component);
+      return acc;
+    },
+    {} as Record<ComponentType, typeof module.components>
+  );
 
   return (
     <div className="flex">

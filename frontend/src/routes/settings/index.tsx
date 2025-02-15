@@ -1,8 +1,19 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { CheckboxGroup } from "@stacc/prism-ui";
-import { useState, useEffect } from "react";
-import { SystemService, SystemInfo } from "../../bindings/changeme";
+import { queries } from "../../queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+export const Route = createFileRoute("/settings/")({
+  component: Settings,
+  loader({ context: { queryClient } }) {
+    queryClient.ensureQueryData(queries.getSystemInfo());
+  },
+});
 
 export function Settings() {
+  const systemInfoQuery = useSuspenseQuery(queries.getSystemInfo());
+  const systemInfo = systemInfoQuery.data;
   const appInfo = {
     version: "v0.0.1",
     name: "Blocc UI",
@@ -14,21 +25,6 @@ export function Settings() {
     showDevEnvironments: true,
     experimentalFeatures: false,
   });
-
-  const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
-
-  useEffect(() => {
-    const fetchSystemInfo = async () => {
-      try {
-        const info = await SystemService.GetSystemInfo();
-        setSystemInfo(info);
-      } catch (error) {
-        console.error("Failed to fetch system info:", error);
-      }
-    };
-
-    fetchSystemInfo();
-  }, []);
 
   const handleSettingChange =
     (key: keyof typeof settings) => (value: string | boolean) => {

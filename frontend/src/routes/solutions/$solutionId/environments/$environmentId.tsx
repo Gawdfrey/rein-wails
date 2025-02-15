@@ -1,15 +1,27 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import {
+  ComponentType,
   Environment,
-  SolutionService,
-  ModuleService,
-  LogService,
   LogEntry,
-} from "../../bindings/changeme";
-import { ComponentType } from "../types";
+  LogService,
+  ModuleService,
+  SolutionService,
+} from "../../../../../bindings/changeme";
+import { useEffect, useState } from "react";
+import { Terminal } from "../../../../components/Terminal";
 import { Button } from "@stacc/prism-ui";
-import { Terminal } from "../components/Terminal";
+
+export const Route = createFileRoute(
+  "/solutions/$solutionId/environments/$environmentId"
+)({
+  component: EnvironmentDetail,
+  params: {
+    parse: (params) => ({
+      solutionId: params.solutionId,
+      environmentId: params.environmentId,
+    }),
+  },
+});
 
 interface ComponentWithDetails {
   id: string;
@@ -38,7 +50,9 @@ const componentTypeIcons: Record<ComponentType, string> = {
 };
 
 export function EnvironmentDetail() {
-  const { solutionId, environmentId } = useParams();
+  const { solutionId, environmentId } = useParams({
+    from: "/solutions/$solutionId/environments/$environmentId",
+  });
   const [environment, setEnvironment] = useState<Environment | null>(null);
   const [moduleComponents, setModuleComponents] = useState<ModuleComponents[]>(
     []

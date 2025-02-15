@@ -1,23 +1,26 @@
-import { SearchBar } from "../components/SearchBar";
-import { ModuleGrid } from "../components/ModuleGrid";
+import { createFileRoute } from "@tanstack/react-router";
+import { SearchBar } from "../../components/SearchBar";
+import { ModuleGrid } from "../../components/ModuleGrid";
+import { queries } from "../../queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { ModuleResponse } from "../../bindings/changeme";
+export const Route = createFileRoute("/modules/")({
+  component: ModuleList,
+  loader: ({ context: { queryClient } }) => {
+    queryClient.ensureQueryData(queries.getModules());
+  },
+});
 
 interface ModuleListProps {
-  modules: ModuleResponse[];
   searchQuery: string;
   onSearchChange: (value: string) => void;
-  loading: boolean;
-  error: string | null;
 }
 
-export function ModuleList({
-  modules,
-  searchQuery,
-  onSearchChange,
-  loading,
-  error,
-}: ModuleListProps) {
+export function ModuleList({ searchQuery, onSearchChange }: ModuleListProps) {
+  const modulesQuery = useSuspenseQuery(queries.getModules());
+  const modules = modulesQuery.data;
+  const error = modulesQuery.error;
+  const loading = modulesQuery.isLoading;
   return (
     <div className="flex-1 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#F8FAFF]">
@@ -37,7 +40,7 @@ export function ModuleList({
 
           {error && (
             <div className="mt-8 p-4 bg-red-50 text-red-700 rounded-lg">
-              {error}
+              {error.message}
             </div>
           )}
 

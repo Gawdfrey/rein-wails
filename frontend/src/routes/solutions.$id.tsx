@@ -1,14 +1,24 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import {
-  SolutionService,
-  Solution,
-  Environment,
-} from "../../bindings/changeme";
-import { DependencyGraph } from "../components/DependencyGraph";
-import { AddEnvironmentModal } from "../components/AddEnvironmentModal";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Environment } from "../../bindings/changeme";
+import { useState } from "react";
 import { InstallModuleModal } from "../components/InstallModuleModal";
 import { Button } from "@stacc/prism-ui";
+import { DependencyGraph } from "../components/DependencyGraph";
+import { AddEnvironmentModal } from "../components/AddEnvironmentModal";
+import { queries } from "../queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+export const Route = createFileRoute("/solutions/$id")({
+  component: SolutionDetail,
+  params: {
+    parse: (params) => ({
+      id: params.id,
+    }),
+  },
+  loader({ context: { queryClient }, params: { id } }) {
+    queryClient.ensureQueryData(queries.getSolutionById(id));
+  },
+});
 
 function EnvironmentCard({
   environment,
@@ -35,7 +45,11 @@ function EnvironmentCard({
       <div className="flex justify-between items-start mb-4">
         <div>
           <Link
-            to={`/solutions/${solutionId}/environments/${environment.id}`}
+            to="/solutions/$solutionId/environments/$environmentId"
+            params={{
+              solutionId,
+              environmentId: environment.id,
+            }}
             className="hover:text-blue-600"
           >
             <h3 className="text-xl font-semibold text-gray-800">
@@ -95,43 +109,16 @@ function EnvironmentCard({
 }
 
 export function SolutionDetail() {
-  const { id } = useParams();
-  const [solution, setSolution] = useState<Solution | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { id } = Route.useParams();
+  const solutionQuery = useSuspenseQuery(queries.getSolutionById(id));
+  const solution = solutionQuery.data;
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const fetchSolution = async () => {
-    if (!id) return;
-
-    try {
-      const result = await SolutionService.GetSolution(id);
-      setSolution(result);
-      setError(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch solution");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSolution();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
-      </div>
-    );
-  }
-
-  if (error || !solution) {
+  if (!solution) {
     return (
       <div className="p-8">
         <div className="bg-red-50 text-red-700 p-4 rounded-lg">
-          {error || "Solution not found"}
+          Solution not found
         </div>
       </div>
     );
@@ -174,7 +161,7 @@ export function SolutionDetail() {
               key={env.id}
               environment={env}
               solutionId={solution.id}
-              onModuleInstalled={fetchSolution}
+              onModuleInstalled={solutionQuery.refetch}
             />
           ))}
         </div>
@@ -196,7 +183,7 @@ export function SolutionDetail() {
         <AddEnvironmentModal
           solutionId={solution.id}
           onClose={() => setShowAddModal(false)}
-          onEnvironmentAdded={fetchSolution}
+          onEnvironmentAdded={solutionQuery.refetch}
         />
       )}
     </div>
