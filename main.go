@@ -21,8 +21,9 @@ var assets embed.FS
 // and starts a goroutine that emits a time-based event every second. It subsequently runs the application and
 // logs any error that might occur.
 func main() {
-	// Create and initialize our ModuleService
+	// Create and initialize our services
 	moduleService := NewModuleService()
+	solutionService := NewSolutionService()
 
 	// Create a new Wails application by providing the necessary options.
 	// Variables 'Name' and 'Description' are for application metadata.
@@ -34,6 +35,7 @@ func main() {
 		Description: "Blocc Module Explorer",
 		Services: []application.Service{
 			application.NewService(moduleService),
+			application.NewService(solutionService),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),

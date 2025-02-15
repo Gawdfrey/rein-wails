@@ -6,6 +6,45 @@
 // @ts-ignore: Unused imports
 import {Create as $Create} from "@wailsio/runtime";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
+import * as time$0 from "../time/models.js";
+
+export class AddEnvironmentRequest {
+    /**
+     * Creates a new AddEnvironmentRequest instance.
+     * @param {Partial<AddEnvironmentRequest>} [$$source = {}] - The source object to create the AddEnvironmentRequest.
+     */
+    constructor($$source = {}) {
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (!("namespace" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["namespace"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new AddEnvironmentRequest instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {AddEnvironmentRequest}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new AddEnvironmentRequest(/** @type {Partial<AddEnvironmentRequest>} */($$parsedSource));
+    }
+}
+
 /**
  * @readonly
  * @enum {string}
@@ -20,6 +59,130 @@ export const ComponentType = {
     ComponentTypeFrontend: "Frontend",
     ComponentTypeApiGateway: "ApiGateway",
     ComponentTypeSetup: "Setup",
+};
+
+export class Environment {
+    /**
+     * Creates a new Environment instance.
+     * @param {Partial<Environment>} [$$source = {}] - The source object to create the Environment.
+     */
+    constructor($$source = {}) {
+        if (!("id" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["id"] = "";
+        }
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (!("namespace" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["namespace"] = "";
+        }
+        if (!("status" in $$source)) {
+            /**
+             * @member
+             * @type {EnvironmentStatus}
+             */
+            this["status"] = (/** @type {EnvironmentStatus} */(""));
+        }
+        if (!("lastDeployed" in $$source)) {
+            /**
+             * @member
+             * @type {time$0.Time}
+             */
+            this["lastDeployed"] = null;
+        }
+        if (!("modules" in $$source)) {
+            /**
+             * @member
+             * @type {EnvironmentModule[]}
+             */
+            this["modules"] = [];
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new Environment instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {Environment}
+     */
+    static createFrom($$source = {}) {
+        const $$createField5_0 = $$createType1;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("modules" in $$parsedSource) {
+            $$parsedSource["modules"] = $$createField5_0($$parsedSource["modules"]);
+        }
+        return new Environment(/** @type {Partial<Environment>} */($$parsedSource));
+    }
+}
+
+export class EnvironmentModule {
+    /**
+     * Creates a new EnvironmentModule instance.
+     * @param {Partial<EnvironmentModule>} [$$source = {}] - The source object to create the EnvironmentModule.
+     */
+    constructor($$source = {}) {
+        if (!("moduleId" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["moduleId"] = "";
+        }
+        if (!("version" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["version"] = "";
+        }
+        if (!("status" in $$source)) {
+            /**
+             * @member
+             * @type {EnvironmentStatus}
+             */
+            this["status"] = (/** @type {EnvironmentStatus} */(""));
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new EnvironmentModule instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {EnvironmentModule}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new EnvironmentModule(/** @type {Partial<EnvironmentModule>} */($$parsedSource));
+    }
+}
+
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const EnvironmentStatus = {
+    /**
+     * The Go zero value for the underlying type of the enum.
+     */
+    $zero: "",
+
+    EnvironmentStatusRunning: "running",
+    EnvironmentStatusStopped: "stopped",
+    EnvironmentStatusError: "error",
 };
 
 export class ModuleAttributes {
@@ -266,10 +429,10 @@ export class ModuleResponse {
      * @returns {ModuleResponse}
      */
     static createFrom($$source = {}) {
-        const $$createField4_0 = $$createType0;
-        const $$createField8_0 = $$createType2;
-        const $$createField9_0 = $$createType3;
-        const $$createField10_0 = $$createType5;
+        const $$createField4_0 = $$createType2;
+        const $$createField8_0 = $$createType4;
+        const $$createField9_0 = $$createType5;
+        const $$createField10_0 = $$createType7;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("tags" in $$parsedSource) {
             $$parsedSource["tags"] = $$createField4_0($$parsedSource["tags"]);
@@ -287,10 +450,136 @@ export class ModuleResponse {
     }
 }
 
+export class Solution {
+    /**
+     * Creates a new Solution instance.
+     * @param {Partial<Solution>} [$$source = {}] - The source object to create the Solution.
+     */
+    constructor($$source = {}) {
+        if (!("id" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["id"] = "";
+        }
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (!("description" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["description"] = "";
+        }
+        if (!("customer" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["customer"] = "";
+        }
+        if (!("createdAt" in $$source)) {
+            /**
+             * @member
+             * @type {time$0.Time}
+             */
+            this["createdAt"] = null;
+        }
+        if (!("updatedAt" in $$source)) {
+            /**
+             * @member
+             * @type {time$0.Time}
+             */
+            this["updatedAt"] = null;
+        }
+        if (!("modules" in $$source)) {
+            /**
+             * @member
+             * @type {SolutionModule[]}
+             */
+            this["modules"] = [];
+        }
+        if (!("environments" in $$source)) {
+            /**
+             * @member
+             * @type {Environment[]}
+             */
+            this["environments"] = [];
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new Solution instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {Solution}
+     */
+    static createFrom($$source = {}) {
+        const $$createField6_0 = $$createType9;
+        const $$createField7_0 = $$createType11;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("modules" in $$parsedSource) {
+            $$parsedSource["modules"] = $$createField6_0($$parsedSource["modules"]);
+        }
+        if ("environments" in $$parsedSource) {
+            $$parsedSource["environments"] = $$createField7_0($$parsedSource["environments"]);
+        }
+        return new Solution(/** @type {Partial<Solution>} */($$parsedSource));
+    }
+}
+
+export class SolutionModule {
+    /**
+     * Creates a new SolutionModule instance.
+     * @param {Partial<SolutionModule>} [$$source = {}] - The source object to create the SolutionModule.
+     */
+    constructor($$source = {}) {
+        if (!("moduleId" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["moduleId"] = "";
+        }
+        if (!("version" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["version"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new SolutionModule instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {SolutionModule}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new SolutionModule(/** @type {Partial<SolutionModule>} */($$parsedSource));
+    }
+}
+
 // Private type creation functions
-const $$createType0 = $Create.Array($Create.Any);
-const $$createType1 = ModuleDependency.createFrom;
-const $$createType2 = $Create.Array($$createType1);
-const $$createType3 = ModuleAttributes.createFrom;
-const $$createType4 = ModuleComponent.createFrom;
-const $$createType5 = $Create.Array($$createType4);
+const $$createType0 = EnvironmentModule.createFrom;
+const $$createType1 = $Create.Array($$createType0);
+const $$createType2 = $Create.Array($Create.Any);
+const $$createType3 = ModuleDependency.createFrom;
+const $$createType4 = $Create.Array($$createType3);
+const $$createType5 = ModuleAttributes.createFrom;
+const $$createType6 = ModuleComponent.createFrom;
+const $$createType7 = $Create.Array($$createType6);
+const $$createType8 = SolutionModule.createFrom;
+const $$createType9 = $Create.Array($$createType8);
+const $$createType10 = Environment.createFrom;
+const $$createType11 = $Create.Array($$createType10);

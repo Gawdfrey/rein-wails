@@ -3,6 +3,8 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { ModuleList } from "./pages/ModuleList";
 import { ModuleDetail } from "./pages/ModuleDetail";
+import { SolutionList } from "./pages/SolutionList";
+import { SolutionDetail } from "./pages/SolutionDetail";
 import { SearchState } from "./types";
 
 import { ModuleResponse, ModuleService } from "../bindings/changeme";
@@ -62,6 +64,8 @@ export function App() {
             path="/modules/:id"
             element={<ModuleDetail modules={modules} />}
           />
+          <Route path="/solutions" element={<SolutionList />} />
+          <Route path="/solutions/:id" element={<SolutionDetail />} />
         </Routes>
       </div>
     </Router>
