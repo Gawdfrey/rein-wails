@@ -59,10 +59,7 @@ function EnvironmentCard({
             key={module.moduleId}
             className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
           >
-            <div>
-              <div className="font-medium text-gray-900">{module.moduleId}</div>
-              <div className="text-sm text-gray-600">v{module.version}</div>
-            </div>
+            <div className="font-medium text-gray-900">{module.moduleId}</div>
             <span
               className={`px-2 py-1 rounded text-xs ${
                 statusColors[module.status as keyof typeof statusColors]

@@ -5,6 +5,7 @@ import { DependencyGraph } from "../components/DependencyGraph";
 import { ModuleResponse, ModuleService } from "../../bindings/changeme";
 import { InstallToEnvironmentModal } from "../components/InstallToEnvironmentModal";
 import { Button } from "@stacc/prism-ui";
+import { Terminal } from "../components/Terminal";
 
 interface ModuleDetailProps {
   modules: ModuleResponse[];
@@ -110,14 +111,10 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
         <div className="bg-gray-50 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Installation</h2>
           <div className="flex gap-4 items-center">
-            <div className="flex-1 bg-gray-900 rounded-lg p-4 font-mono text-white">
+            <Terminal>
               <code>{module.installCommand}</code>
-            </div>
-            <Button
-              label="Install"
-              onClick={() => setShowInstallModal(true)}
-              className="px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex-shrink-0 font-medium"
-            />
+            </Terminal>
+            <Button label="Install" onClick={() => setShowInstallModal(true)} />
           </div>
         </div>
 

@@ -9,6 +9,7 @@ import {
 } from "../../bindings/changeme";
 import { ComponentType } from "../types";
 import { Button } from "@stacc/prism-ui";
+import { Terminal } from "../components/Terminal";
 
 interface ComponentWithDetails {
   id: string;
@@ -369,46 +370,42 @@ export function EnvironmentDetail() {
                 </div>
               </div>
               <div className="flex-1 relative">
-                <div className="absolute inset-0 bg-gray-900 rounded-lg flex flex-col">
-                  <div className="flex-1 overflow-auto">
-                    <div className="font-mono text-sm text-white p-4">
-                      {logsLoading ? (
-                        <div className="flex justify-center items-center h-full">
-                          <div className="animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-blue-600"></div>
-                        </div>
-                      ) : logsError ? (
-                        <div className="text-red-500">{logsError}</div>
-                      ) : logs.length === 0 ? (
-                        <div className="text-gray-500">No logs available</div>
-                      ) : (
-                        <div className="space-y-1">
-                          {logs.map((log, index) => (
-                            <div
-                              key={index}
-                              className="flex hover:bg-gray-800 rounded px-2 py-1"
-                            >
-                              <span className="text-gray-500 mr-4 select-none">
-                                {new Date(log.timestamp).toLocaleTimeString()}
-                              </span>
-                              <span
-                                className={`mr-4 w-14 text-center select-none ${
-                                  logLevelColors[
-                                    log.level as keyof typeof logLevelColors
-                                  ]
-                                }`}
-                              >
-                                {log.level}
-                              </span>
-                              <span className="whitespace-pre-wrap break-all flex-1">
-                                {log.message}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                <Terminal className="absolute inset-0">
+                  {logsLoading ? (
+                    <div className="flex justify-center items-center h-full">
+                      <div className="animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-blue-600"></div>
                     </div>
-                  </div>
-                </div>
+                  ) : logsError ? (
+                    <div className="text-red-500">{logsError}</div>
+                  ) : logs.length === 0 ? (
+                    <div className="text-gray-500">No logs available</div>
+                  ) : (
+                    <div className="space-y-1">
+                      {logs.map((log, index) => (
+                        <div
+                          key={index}
+                          className="flex hover:bg-gray-800 rounded px-2 py-1"
+                        >
+                          <span className="text-gray-500 mr-4 select-none">
+                            {new Date(log.timestamp).toLocaleTimeString()}
+                          </span>
+                          <span
+                            className={`mr-4 w-14 text-center select-none ${
+                              logLevelColors[
+                                log.level as keyof typeof logLevelColors
+                              ]
+                            }`}
+                          >
+                            {log.level}
+                          </span>
+                          <span className="whitespace-pre-wrap break-all flex-1">
+                            {log.message}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Terminal>
               </div>
             </div>
           ) : (
