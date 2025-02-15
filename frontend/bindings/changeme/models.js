@@ -185,6 +185,48 @@ export const EnvironmentStatus = {
     EnvironmentStatusError: "error",
 };
 
+export class LogEntry {
+    /**
+     * Creates a new LogEntry instance.
+     * @param {Partial<LogEntry>} [$$source = {}] - The source object to create the LogEntry.
+     */
+    constructor($$source = {}) {
+        if (!("timestamp" in $$source)) {
+            /**
+             * @member
+             * @type {time$0.Time}
+             */
+            this["timestamp"] = null;
+        }
+        if (!("level" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["level"] = "";
+        }
+        if (!("message" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["message"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new LogEntry instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {LogEntry}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new LogEntry(/** @type {Partial<LogEntry>} */($$parsedSource));
+    }
+}
+
 export class ModuleAttributes {
     /**
      * Creates a new ModuleAttributes instance.

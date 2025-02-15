@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   SolutionService,
   Solution,
@@ -34,10 +34,15 @@ function EnvironmentCard({
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h3 className="text-xl font-semibold text-gray-800">
-            {environment.name}
-          </h3>
-          <p className="text-sm text-gray-500">{environment.namespace}</p>
+          <Link
+            to={`/solutions/${solutionId}/environments/${environment.id}`}
+            className="hover:text-blue-600"
+          >
+            <h3 className="text-xl font-semibold text-gray-800">
+              {environment.name}
+            </h3>
+            <p className="text-sm text-gray-500">{environment.namespace}</p>
+          </Link>
         </div>
         <span
           className={`px-2 py-1 rounded text-sm ${
