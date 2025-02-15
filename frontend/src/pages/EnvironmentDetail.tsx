@@ -19,6 +19,7 @@ interface ComponentWithDetails {
   moduleName: string;
   version: string;
   status: "running" | "stopped" | "error";
+  selected?: boolean;
 }
 
 interface ModuleComponents {
@@ -27,6 +28,13 @@ interface ModuleComponents {
   version: string;
   components: ComponentWithDetails[];
 }
+
+const componentTypeIcons: Record<ComponentType, string> = {
+  Backend: "⚙️",
+  Frontend: "🖥️",
+  ApiGateway: "🔌",
+  Setup: "🔧",
+};
 
 export function EnvironmentDetail() {
   const { solutionId, environmentId } = useParams();
@@ -41,6 +49,9 @@ export function EnvironmentDetail() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [logsLoading, setLogsLoading] = useState(false);
   const [logsError, setLogsError] = useState<string | null>(null);
+  const [selectedForSync, setSelectedForSync] = useState<Set<string>>(
+    new Set()
+  );
 
   useEffect(() => {
     const fetchEnvironment = async () => {
@@ -133,6 +144,39 @@ export function EnvironmentDetail() {
     fetchLogs(component);
   };
 
+  const handleSyncSelected = async () => {
+    // TODO: Implement syncing of selected components
+    console.log("Syncing selected components:", Array.from(selectedForSync));
+  };
+
+  const toggleComponentSelection = (componentId: string, checked: boolean) => {
+    setSelectedForSync((prev) => {
+      const newSet = new Set(prev);
+      if (checked) {
+        newSet.add(componentId);
+      } else {
+        newSet.delete(componentId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleModuleSelection = (moduleId: string, checked: boolean) => {
+    const components =
+      moduleComponents.find((m) => m.moduleId === moduleId)?.components || [];
+    setSelectedForSync((prev) => {
+      const newSet = new Set(prev);
+      components.forEach((comp) => {
+        if (checked) {
+          newSet.add(comp.id);
+        } else {
+          newSet.delete(comp.id);
+        }
+      });
+      return newSet;
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -186,38 +230,118 @@ export function EnvironmentDetail() {
 
       <div className="grid grid-cols-4 gap-6">
         {/* Component List */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            Components
-          </h2>
-          <div className="space-y-6">
-            {moduleComponents.map((moduleComponent) => (
-              <div key={moduleComponent.moduleId} className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-medium text-gray-900">
-                    {moduleComponent.moduleName}
-                  </h3>
-                  <span className="text-xs text-gray-500">
-                    v{moduleComponent.version}
-                  </span>
-                </div>
-                <div className="space-y-1 pl-4 border-l-2 border-gray-200">
-                  {moduleComponent.components.map((component) => (
-                    <Button
-                      key={component.id}
-                      onClick={() => handleComponentSelect(component)}
-                      label={component.name}
-                      variant={
-                        selectedComponent?.id === component.id
-                          ? "primary"
-                          : "outline"
-                      }
-                      className="w-full justify-start text-sm"
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
+        <div className="flex flex-col h-[calc(100vh-12rem)]">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-800">Modules</h2>
+            <Button
+              onClick={handleSyncSelected}
+              label={`Sync (${selectedForSync.size})`}
+              disabled={selectedForSync.size === 0}
+              variant="primary"
+              className="text-sm"
+            />
+          </div>
+          <div className="overflow-y-auto flex-1 pr-2">
+            <div className="space-y-8">
+              {moduleComponents.map((moduleComponent) => {
+                const components = moduleComponent.components;
+                const allModuleComponentsSelected = components.every(
+                  (comp: ComponentWithDetails) => selectedForSync.has(comp.id)
+                );
+                const someModuleComponentsSelected = components.some(
+                  (comp: ComponentWithDetails) => selectedForSync.has(comp.id)
+                );
+
+                return (
+                  <div key={moduleComponent.moduleId}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                          checked={allModuleComponentsSelected}
+                          ref={(input) => {
+                            if (input) {
+                              input.indeterminate =
+                                !allModuleComponentsSelected &&
+                                someModuleComponentsSelected;
+                            }
+                          }}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            toggleModuleSelection(
+                              moduleComponent.moduleId,
+                              e.target.checked
+                            )
+                          }
+                        />
+                        <div className="flex items-center gap-2">
+                          <span className="text-base font-semibold text-gray-900">
+                            {moduleComponent.moduleName}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            v{moduleComponent.version}
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                    <div className="grid gap-3 pl-4 border-l-2 border-gray-200">
+                      {moduleComponent.components.map((component) => (
+                        <div
+                          key={component.id}
+                          onClick={() => handleComponentSelect(component)}
+                          className={`bg-white rounded-lg border ${
+                            selectedComponent?.id === component.id
+                              ? "border-blue-500 ring-1 ring-blue-500"
+                              : "border-gray-200"
+                          } p-4 transition-all hover:border-blue-500 cursor-pointer group relative`}
+                        >
+                          <div
+                            className="absolute left-4 top-4"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <input
+                              type="checkbox"
+                              className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                              checked={selectedForSync.has(component.id)}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) =>
+                                toggleComponentSelection(
+                                  component.id,
+                                  e.target.checked
+                                )
+                              }
+                            />
+                          </div>
+                          <div className="flex items-start justify-between mb-2 pl-8">
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">
+                                {componentTypeIcons[component.type]}
+                              </span>
+                              <div>
+                                <h4 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                                  {component.name}
+                                </h4>
+                                <p className="text-sm text-gray-500">
+                                  {component.description}
+                                </p>
+                              </div>
+                            </div>
+                            <span
+                              className={`px-2 py-1 rounded text-xs ${
+                                statusColors[component.status]
+                              }`}
+                            >
+                              {component.status}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 

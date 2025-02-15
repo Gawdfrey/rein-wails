@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { SolutionService, Solution } from "../../bindings/changeme";
-import { Button } from "@stacc/prism-ui";
+import { Button, UNSTABLE_Select } from "@stacc/prism-ui";
 
 interface InstallToEnvironmentModalProps {
   moduleId: string;
@@ -82,6 +82,21 @@ export function InstallToEnvironmentModal({
     }
   };
 
+  const selectOptions = developmentEnvironments.map((env) => ({
+    label: `${env.solutionName} - ${env.environmentName}`,
+    value: `${env.solutionId}:${env.environmentId}`,
+  }));
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    const [solutionId, environmentId] = value.split(":");
+    const env = developmentEnvironments.find(
+      (env) =>
+        env.solutionId === solutionId && env.environmentId === environmentId
+    );
+    setSelectedEnvironment(env || null);
+  };
+
   if (isFetching) {
     return (
       <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -115,37 +130,17 @@ export function InstallToEnvironmentModal({
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Development Environment
-              </label>
-              <select
+              <UNSTABLE_Select
+                label="Select Development Environment"
                 value={
                   selectedEnvironment
                     ? `${selectedEnvironment.solutionId}:${selectedEnvironment.environmentId}`
                     : ""
                 }
-                onChange={(e) => {
-                  const [solutionId, environmentId] = e.target.value.split(":");
-                  const env = developmentEnvironments.find(
-                    (env) =>
-                      env.solutionId === solutionId &&
-                      env.environmentId === environmentId
-                  );
-                  setSelectedEnvironment(env || null);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                onChange={handleSelectChange}
+                options={selectOptions}
                 required
-              >
-                <option value="">Select an environment...</option>
-                {developmentEnvironments.map((env) => (
-                  <option
-                    key={`${env.solutionId}:${env.environmentId}`}
-                    value={`${env.solutionId}:${env.environmentId}`}
-                  >
-                    {env.solutionName} - {env.environmentName}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
             {error && (

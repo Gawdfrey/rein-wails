@@ -10,10 +10,10 @@ export function Sidebar() {
   return (
     <div className="w-64 h-full max-w-64 min-h-screen bg-gray-100 p-4 border-r border-gray-200">
       <h2 className="text-xl font-semibold mb-4">Blocc</h2>
-      <nav className="space-y-1">
+      <nav className="flex flex-col gap-2">
         <Link to="/">
           <Button
-            className={`w-full text-left p-2 rounded hover:bg-gray-200 ${
+            className={`w-full text-left p-2 rounded hover:bg-gray-200 cursor-pointer ${
               isModulesPage ? "bg-gray-200" : ""
             }`}
           >
@@ -22,7 +22,7 @@ export function Sidebar() {
         </Link>
         <Link to="/solutions">
           <Button
-            className={`w-full text-left p-2 rounded hover:bg-gray-200 ${
+            className={`w-full text-left p-2 rounded hover:bg-gray-200 cursor-pointer ${
               isSolutionsPage ? "bg-gray-200" : ""
             }`}
           >
@@ -31,7 +31,7 @@ export function Sidebar() {
         </Link>
         <Link to="/settings">
           <Button
-            className={`w-full text-left p-2 rounded hover:bg-gray-200 ${
+            className={`w-full text-left p-2 rounded hover:bg-gray-200 cursor-pointer ${
               location.pathname === "/settings" ? "bg-gray-200" : ""
             }`}
           >
