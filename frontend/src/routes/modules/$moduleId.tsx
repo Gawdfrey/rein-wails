@@ -102,6 +102,42 @@ export function ModuleDetail() {
               </span>
             ))}
           </div>
+
+          {/* Statistics Section */}
+          <div className="grid grid-cols-4 gap-4 mb-8">
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">Solutions</div>
+              <div className="text-2xl font-semibold text-gray-900">12</div>
+              <div className="text-xs text-gray-500 mt-1">
+                Using this module
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">Environments</div>
+              <div className="text-2xl font-semibold text-gray-900">28</div>
+              <div className="text-xs text-gray-500 mt-1">
+                Active installations
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">Downloads</div>
+              <div className="text-2xl font-semibold text-gray-900">1.2k</div>
+              <div className="text-xs text-gray-500 mt-1">
+                Total installations
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">
+                Most Used Version
+              </div>
+              <div className="text-2xl font-semibold text-gray-900">
+                {module.version}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                In 85% of installations
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Installation Section */}
