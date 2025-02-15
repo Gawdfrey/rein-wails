@@ -45,4 +45,5 @@ export interface ModuleService {
   GetModules(): Promise<Module[]>;
   GetModule(id: string): Promise<Module | null>;
   SearchModules(query: string): Promise<Module[]>;
+  GetModuleReadme(id: string): Promise<string>;
 }

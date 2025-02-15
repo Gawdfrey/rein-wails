@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom";
-import { Module, ComponentType } from "../types";
+import { useEffect, useState } from "react";
+import { ComponentType } from "../types";
 import { DependencyGraph } from "../components/DependencyGraph";
+import { ModuleResponse, ModuleService } from "../../bindings/changeme";
 
 interface ModuleDetailProps {
-  modules: Module[];
+  modules: ModuleResponse[];
 }
 
 function AttributeLink({
@@ -38,6 +40,26 @@ const componentTypeIcons: Record<ComponentType, string> = {
 export function ModuleDetail({ modules }: ModuleDetailProps) {
   const { id } = useParams();
   const module = modules.find((m) => m.id === id);
+  const [readme, setReadme] = useState<string>("");
+  const [readmeLoading, setReadmeLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchReadme = async () => {
+      if (module?.attributes.githubRepo) {
+        setReadmeLoading(true);
+        try {
+          const content = await ModuleService.GetModuleReadme(module.id);
+          setReadme(content);
+        } catch (error) {
+          console.error("Failed to fetch README:", error);
+        } finally {
+          setReadmeLoading(false);
+        }
+      }
+    };
+
+    fetchReadme();
+  }, [module]);
 
   if (!module) {
     return (
@@ -49,10 +71,11 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
 
   // Group components by type
   const componentsByType = module.components.reduce((acc, component) => {
-    if (!acc[component.type]) {
-      acc[component.type] = [];
+    const type = component.type as ComponentType;
+    if (!acc[type]) {
+      acc[type] = [];
     }
-    acc[component.type].push(component);
+    acc[type].push(component);
     return acc;
   }, {} as Record<ComponentType, typeof module.components>);
 
@@ -85,6 +108,24 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
             <code>{module.installCommand}</code>
           </div>
         </div>
+
+        {/* README Section */}
+        {module.attributes.githubRepo && (
+          <div className="bg-white rounded-lg p-6 shadow-sm mb-8">
+            <h2 className="text-xl font-semibold mb-4">README</h2>
+            {readmeLoading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-300 border-t-blue-600"></div>
+              </div>
+            ) : readme ? (
+              <div className="prose max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: readme }} />
+              </div>
+            ) : (
+              <p className="text-gray-600">No README available</p>
+            )}
+          </div>
+        )}
 
         {/* Components Section */}
         <div className="bg-white rounded-lg p-6 shadow-sm mb-8">
@@ -141,7 +182,7 @@ export function ModuleDetail({ modules }: ModuleDetailProps) {
       </div>
 
       {/* Right Sidebar with Metadata */}
-      <div className="w-[100px] p-2 border-l border-gray-200">
+      <div className="w-60 p-2 border-l border-gray-200">
         <div className="space-y-4">
           <div>
             <h3 className="text-[11px] text-gray-500">Version</h3>

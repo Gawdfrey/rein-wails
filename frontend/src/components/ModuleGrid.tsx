@@ -1,8 +1,9 @@
 import { ModuleCard } from "./ModuleCard";
-import { Module } from "../types";
+
+import { ModuleResponse } from "../../bindings/changeme";
 
 interface ModuleGridProps {
-  modules: Module[];
+  modules: ModuleResponse[];
 }
 
 export function ModuleGrid({ modules }: ModuleGridProps) {

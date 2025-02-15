@@ -24,6 +24,16 @@ export function GetModule(id) {
 }
 
 /**
+ * GetModuleReadme fetches the README content from GitHub if available
+ * @param {string} id
+ * @returns {Promise<string> & { cancel(): void }}
+ */
+export function GetModuleReadme(id) {
+    let $resultPromise = /** @type {any} */($Call.ByID(2350751181, id));
+    return $resultPromise;
+}
+
+/**
  * @returns {Promise<$models.ModuleResponse[]> & { cancel(): void }}
  */
 export function GetModules() {

@@ -1,4 +1,6 @@
+@import "github-markdown-css";
 @import "@stacc/prism-ui-style/dist/prism_variables.css";
 @import "@stacc/prism-ui-style/dist/prism_global.css";
 @import "./prism_tailwind.css";
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";

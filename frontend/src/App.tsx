@@ -3,16 +3,16 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { ModuleList } from "./pages/ModuleList";
 import { ModuleDetail } from "./pages/ModuleDetail";
-import { Module, SearchState } from "./types";
+import { SearchState } from "./types";
 
-import { ModuleService } from "../bindings/changeme";
+import { ModuleResponse, ModuleService } from "../bindings/changeme";
 
 export function App() {
   const [searchState, setSearchState] = useState<SearchState>({
     query: "",
     filters: [],
   });
-  const [modules, setModules] = useState<Module[]>([]);
+  const [modules, setModules] = useState<ModuleResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,7 +41,7 @@ export function App() {
 
   return (
     <Router>
-      <div className="flex h-screen bg-background-default">
+      <div className="flex h-full bg-background-default">
         <Sidebar />
         <Routes>
           <Route

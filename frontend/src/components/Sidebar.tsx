@@ -7,7 +7,7 @@ export function Sidebar() {
     location.pathname === "/" || location.pathname.startsWith("/modules");
 
   return (
-    <div className="w-64 h-full bg-gray-100 p-4 border-r border-gray-200">
+    <div className="w-64 h-full max-w-64 min-h-screen bg-gray-100 p-4 border-r border-gray-200">
       <h2 className="text-xl font-semibold mb-4">Blocc</h2>
       <nav>
         <Link to="/">

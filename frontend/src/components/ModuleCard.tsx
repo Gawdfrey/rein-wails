@@ -1,8 +1,8 @@
-import { Module } from "../types";
+import { ModuleResponse } from "../../bindings/changeme";
 import { Link } from "react-router-dom";
 
 interface ModuleCardProps {
-  module: Module;
+  module: ModuleResponse;
 }
 
 export function ModuleCard({ module }: ModuleCardProps) {

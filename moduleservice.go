@@ -67,6 +67,7 @@ type ModuleResponse struct {
 
 type ModuleService struct {
 	modules []Module
+	github  *GitHubService
 }
 
 func (m Module) ToResponse() ModuleResponse {
@@ -105,7 +106,7 @@ func NewModuleService() *ModuleService {
 				},
 			},
 			Attributes: ModuleAttributes{
-				GithubRepo:    "https://github.com/redis/redis-stack",
+				GithubRepo:    "https://github.com/sindresorhus/github-markdown-css",
 				Documentation: "https://redis.io/docs/stack/",
 				Website:       "https://redis.io/",
 				License:       "MIT",
@@ -149,7 +150,7 @@ func NewModuleService() *ModuleService {
 				},
 			},
 			Attributes: ModuleAttributes{
-				GithubRepo:    "https://github.com/zalando/patroni",
+				GithubRepo:    "https://github.com/sindresorhus/github-markdown-css",
 				Documentation: "https://patroni.readthedocs.io/",
 				Website:       "https://www.postgresql.org/",
 				License:       "Apache-2.0",
@@ -189,6 +190,7 @@ func NewModuleService() *ModuleService {
 
 	return &ModuleService{
 		modules: modules,
+		github:  NewGitHubService(),
 	}
 }
 
@@ -240,4 +242,19 @@ func (s *ModuleService) SearchModules(query string) []ModuleResponse {
 		responses[i] = module.ToResponse()
 	}
 	return responses
+}
+
+// GetModuleReadme fetches the README content from GitHub if available
+func (s *ModuleService) GetModuleReadme(id string) string {
+	module := s.GetModule(id)
+	if module == nil || module.Attributes.GithubRepo == "" {
+		return ""
+	}
+
+	readme, err := s.github.GetReadmeFromURL(module.Attributes.GithubRepo)
+	if err != nil {
+		return ""
+	}
+
+	return readme
 } 

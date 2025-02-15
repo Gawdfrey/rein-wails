@@ -1,9 +1,10 @@
 import { SearchBar } from "../components/SearchBar";
 import { ModuleGrid } from "../components/ModuleGrid";
-import { Module } from "../types";
+
+import { ModuleResponse } from "../../bindings/changeme";
 
 interface ModuleListProps {
-  modules: Module[];
+  modules: ModuleResponse[];
   searchQuery: string;
   onSearchChange: (value: string) => void;
   loading: boolean;
