@@ -605,6 +605,48 @@ export class SolutionModule {
     }
 }
 
+export class SystemInfo {
+    /**
+     * Creates a new SystemInfo instance.
+     * @param {Partial<SystemInfo>} [$$source = {}] - The source object to create the SystemInfo.
+     */
+    constructor($$source = {}) {
+        if (!("operatingSystem" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["operatingSystem"] = "";
+        }
+        if (!("shell" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["shell"] = "";
+        }
+        if (!("architecture" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["architecture"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new SystemInfo instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {SystemInfo}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new SystemInfo(/** @type {Partial<SystemInfo>} */($$parsedSource));
+    }
+}
+
 // Private type creation functions
 const $$createType0 = EnvironmentModule.createFrom;
 const $$createType1 = $Create.Array($$createType0);

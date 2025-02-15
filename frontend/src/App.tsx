@@ -6,6 +6,7 @@ import { ModuleDetail } from "./pages/ModuleDetail";
 import { SolutionList } from "./pages/SolutionList";
 import { SolutionDetail } from "./pages/SolutionDetail";
 import { EnvironmentDetail } from "./pages/EnvironmentDetail";
+import { Settings } from "./pages/Settings";
 import { SearchState } from "./types";
 
 import { ModuleResponse, ModuleService } from "../bindings/changeme";
@@ -71,6 +72,7 @@ export function App() {
             path="/solutions/:solutionId/environments/:environmentId"
             element={<EnvironmentDetail />}
           />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </Router>

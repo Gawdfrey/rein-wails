@@ -5,10 +5,12 @@
 import * as LogService from "./logservice.js";
 import * as ModuleService from "./moduleservice.js";
 import * as SolutionService from "./solutionservice.js";
+import * as SystemService from "./systemservice.js";
 export {
     LogService,
     ModuleService,
-    SolutionService
+    SolutionService,
+    SystemService
 };
 
 export * from "./models.js";

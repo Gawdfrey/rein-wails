@@ -25,6 +25,7 @@ func main() {
 	moduleService := NewModuleService()
 	solutionService := NewSolutionService()
 	logService := NewLogService()
+	systemService := NewSystemService()
 
 	// Create a new Wails application by providing the necessary options.
 	// Variables 'Name' and 'Description' are for application metadata.
@@ -38,6 +39,7 @@ func main() {
 			application.NewService(moduleService),
 			application.NewService(solutionService),
 			application.NewService(logService),
+			application.NewService(systemService),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),
