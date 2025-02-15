@@ -19,9 +19,10 @@ export function ModuleList({
   error,
 }: ModuleListProps) {
   return (
-    <div className="flex-1 relative">
-      <div className="absolute inset-0 bg-white">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+    <div className="flex-1 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#F8FAFF]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1B4DF520_1px,transparent_1px),linear-gradient(to_bottom,#1B4DF520_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,#1B4DF510,transparent)]" />
       </div>
 
       <div className="relative z-10 p-8">

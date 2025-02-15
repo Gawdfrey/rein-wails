@@ -23,9 +23,6 @@ export function ModuleCard({ module }: ModuleCardProps) {
           </span>
         ))}
       </div>
-      <div className="mt-4 text-sm text-gray-500">
-        Last updated: {module.lastUpdated}
-      </div>
     </Link>
   );
 }
