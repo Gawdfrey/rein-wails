@@ -103,6 +103,34 @@ function Palette({ children }: { children: React.ReactNode }) {
     },
   ];
 
+  // Configuration actions
+  const configurationActions: CommandItem[] = [
+    {
+      id: "env-config",
+      name: "Environment Configurations",
+      shortcut: ["c"],
+      keywords: "environment config yaml settings variables secrets",
+      section: "Configuration",
+      icon: "⚙️",
+      perform: () => navigate({ to: "/settings" }),
+    },
+    ...solutionsQuery.data.flatMap((solution) =>
+      solution.environments.map((env) => ({
+        id: `config-${solution.id}-${env.id}`,
+        name: `Configure ${env.name}`,
+        keywords: `configure ${env.name} ${solution.name} environment yaml settings variables secrets`,
+        subtitle: `Edit configuration for ${env.name} in ${solution.name}`,
+        perform: () =>
+          navigate({
+            to: "/solutions/$solutionId/environments/$environmentId",
+            params: { solutionId: solution.id, environmentId: env.id },
+          }),
+        section: "Configuration",
+        icon: "🔧",
+      }))
+    ),
+  ];
+
   // Quick actions that don't require data
   const quickActions: CommandItem[] = [
     {
@@ -139,6 +167,18 @@ function Palette({ children }: { children: React.ReactNode }) {
       perform: () => {
         // This will be implemented when we add the sync functionality
         console.log("Sync environment action triggered");
+      },
+    },
+    {
+      id: "edit-config",
+      name: "Edit Configuration",
+      shortcut: ["k"],
+      keywords: "edit configuration yaml settings variables secrets",
+      section: "Quick Actions",
+      icon: "📝",
+      perform: () => {
+        // This will be implemented when we add the configuration editor
+        console.log("Edit configuration action triggered");
       },
     },
   ];
@@ -202,6 +242,7 @@ function Palette({ children }: { children: React.ReactNode }) {
   useRegisterActions([
     ...navigationActions,
     ...quickActions,
+    ...configurationActions,
     ...moduleActions,
     ...solutionActions,
     ...environmentActions,

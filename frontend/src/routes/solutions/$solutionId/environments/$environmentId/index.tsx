@@ -1,4 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ComponentType,
   Environment,
@@ -6,13 +6,13 @@ import {
   LogService,
   ModuleService,
   SolutionService,
-} from "../../../../../bindings/changeme";
+} from "../../../../../../bindings/changeme";
 import { useEffect, useState } from "react";
-import { Terminal } from "../../../../components/Terminal";
+import { Terminal } from "../../../../../components/Terminal";
 import { Button } from "@stacc/prism-ui";
 
 export const Route = createFileRoute(
-  "/solutions/$solutionId/environments/$environmentId"
+  "/solutions/$solutionId/environments/$environmentId/"
 )({
   component: EnvironmentDetail,
   params: {
@@ -50,9 +50,7 @@ const componentTypeIcons: Record<ComponentType, string> = {
 };
 
 export function EnvironmentDetail() {
-  const { solutionId, environmentId } = useParams({
-    from: "/solutions/$solutionId/environments/$environmentId",
-  });
+  const { solutionId, environmentId } = Route.useParams();
   const [environment, setEnvironment] = useState<Environment | null>(null);
   const [moduleComponents, setModuleComponents] = useState<ModuleComponents[]>(
     []
@@ -233,13 +231,41 @@ export function EnvironmentDetail() {
             </h1>
             <p className="text-gray-600">{environment.namespace}</p>
           </div>
-          <span
-            className={`px-3 py-1 rounded-full text-sm ${
-              statusColors[environment.status as keyof typeof statusColors]
-            }`}
-          >
-            {environment.status}
-          </span>
+          <div className="flex items-center gap-4">
+            <span
+              className={`px-3 py-1 rounded-full text-sm ${
+                statusColors[environment.status as keyof typeof statusColors]
+              }`}
+            >
+              {environment.status}
+            </span>
+            <Link
+              to="/solutions/$solutionId/environments/$environmentId/settings"
+              params={{ solutionId, environmentId }}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              Configure Environment
+            </Link>
+          </div>
         </div>
       </div>
 
