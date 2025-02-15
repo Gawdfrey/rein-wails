@@ -1,17 +1,17 @@
 import { Button } from "react-aria-components";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 
 export function Sidebar() {
-  const router = useRouter();
+  const router = useRouterState();
 
   const isModulesPage =
-    router.state.location.pathname === "/" ||
-    router.state.location.pathname.startsWith("/modules");
-  const isSolutionsPage =
-    router.state.location.pathname.startsWith("/solutions");
+    router.location.pathname === "/" ||
+    router.location.pathname.startsWith("/modules");
+  const isSolutionsPage = router.location.pathname.startsWith("/solutions");
+  const isSettingsPage = router.location.pathname.startsWith("/settings");
 
   return (
-    <div className="w-64 h-full max-w-64 min-h-screen bg-gray-100 p-4 border-r border-gray-200">
+    <div className="w-64 min-w-64 h-full max-w-64 min-h-screen bg-gray-100 p-4 border-r border-gray-200">
       <Link to="/" className="block mb-4">
         <h2 className="text-xl font-semibold hover:text-blue-600 transition-colors">
           Blocc
@@ -39,9 +39,7 @@ export function Sidebar() {
         <Link to="/settings" className="block">
           <Button
             className={`w-full text-left p-2 rounded hover:bg-gray-200 cursor-pointer ${
-              router.state.location.pathname === "/settings"
-                ? "bg-gray-200"
-                : ""
+              isSettingsPage ? "bg-gray-200" : ""
             }`}
           >
             Settings

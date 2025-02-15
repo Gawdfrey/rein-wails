@@ -9,16 +9,20 @@ function RouteComponent() {
   return (
     <div className="flex-1 overflow-auto">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 px-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Welcome to Blocc</h1>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl">
+      <div className="relative py-20 px-8">
+        <div className="absolute inset-0 bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]" />
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <h1 className="text-5xl font-bold mb-6 text-gray-900">
+            Welcome to Blocc
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl">
             Your centralized platform for managing infrastructure modules and
             solutions. Deploy, monitor, and scale with confidence.
           </p>
           <Link
             to="/modules"
-            className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             Explore Modules
           </Link>
