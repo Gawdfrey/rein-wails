@@ -14,14 +14,39 @@ export const Route = createFileRoute("/modules/")({
 
 export function ModuleList() {
   const [searchText, setSearchText] = useState("");
+  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const modulesQuery = useQuery(queries.getModules(searchText));
   const modules = modulesQuery.data ?? [];
   const error = modulesQuery.error;
   const loading = modulesQuery.isLoading;
 
+  // Get unique tags from all modules
+  const allTags = Array.from(
+    new Set(modules.flatMap((module) => module.tags))
+  ).sort();
+
   function onSearchChange(value: string) {
     setSearchText(value);
   }
+
+  function toggleTag(tag: string) {
+    setSelectedTags((prev) => {
+      const newTags = new Set(prev);
+      if (newTags.has(tag)) {
+        newTags.delete(tag);
+      } else {
+        newTags.add(tag);
+      }
+      return newTags;
+    });
+  }
+
+  // Filter modules based on selected tags
+  const filteredModules = modules.filter((module) =>
+    selectedTags.size === 0
+      ? true
+      : module.tags.some((tag) => selectedTags.has(tag))
+  );
 
   return (
     <div className="flex-1 relative overflow-hidden">
@@ -40,6 +65,23 @@ export function ModuleList() {
 
           <SearchBar value={searchText} onChange={onSearchChange} />
 
+          {/* Tag filters */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`px-3 py-1 rounded-full cursor-pointer text-sm transition-colors ${
+                  selectedTags.has(tag)
+                    ? "bg-blue-100 text-blue-800 hover:bg-blue-200"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+
           {error && (
             <div className="mt-8 p-4 bg-red-50 text-red-700 rounded-lg">
               {error.message}
@@ -51,7 +93,7 @@ export function ModuleList() {
               <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
             </div>
           ) : (
-            <ModuleGrid modules={modules} />
+            <ModuleGrid modules={filteredModules} />
           )}
         </div>
       </div>

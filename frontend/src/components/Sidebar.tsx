@@ -4,9 +4,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 export function Sidebar() {
   const router = useRouterState();
 
-  const isModulesPage =
-    router.location.pathname === "/" ||
-    router.location.pathname.startsWith("/modules");
+  const isModulesPage = router.location.pathname.startsWith("/modules");
   const isSolutionsPage = router.location.pathname.startsWith("/solutions");
   const isSettingsPage = router.location.pathname.startsWith("/settings");
 
