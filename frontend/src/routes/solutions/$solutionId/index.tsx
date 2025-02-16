@@ -137,7 +137,7 @@ export function SolutionDetail() {
             </h1>
             <p className="text-xl text-gray-600">{solution.description}</p>
             <p className="text-sm text-gray-500 mt-2">
-              Customer: {solution.customer}
+              Organization: {solution.organization}
             </p>
           </div>
           <Button

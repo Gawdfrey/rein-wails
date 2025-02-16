@@ -40,10 +40,10 @@ type Module struct {
 	ID             string            `json:"id"`
 	Name           string            `json:"name"`
 	Description    string            `json:"description"`
+	Organization   string            `json:"organization"`
 	LastUpdated    time.Time         `json:"lastUpdated" ts_type:"string"`
 	Tags           []string          `json:"tags"`
 	Version        string            `json:"version"`
-	InstallCommand string            `json:"installCommand"`
 	Maintainer     string            `json:"maintainer"`
 	Dependencies   []ModuleDependency `json:"dependencies"`
 	Attributes     ModuleAttributes   `json:"attributes"`
@@ -55,10 +55,10 @@ type ModuleResponse struct {
 	ID             string            `json:"id"`
 	Name           string            `json:"name"`
 	Description    string            `json:"description"`
-	LastUpdated    string            `json:"lastUpdated"` // ISO date string
+	Organization   string            `json:"organization"`
+	LastUpdated    time.Time         `json:"lastUpdated" ts_type:"string"`
 	Tags           []string          `json:"tags"`
 	Version        string            `json:"version"`
-	InstallCommand string            `json:"installCommand"`
 	Maintainer     string            `json:"maintainer"`
 	Dependencies   []ModuleDependency `json:"dependencies"`
 	Attributes     ModuleAttributes   `json:"attributes"`
@@ -75,10 +75,10 @@ func (m Module) ToResponse() ModuleResponse {
 		ID:             m.ID,
 		Name:           m.Name,
 		Description:    m.Description,
-		LastUpdated:    m.LastUpdated.Format(time.RFC3339),
+		Organization:   m.Organization,
+		LastUpdated:    m.LastUpdated,
 		Tags:           m.Tags,
 		Version:        m.Version,
-		InstallCommand: m.InstallCommand,
 		Maintainer:     m.Maintainer,
 		Dependencies:   m.Dependencies,
 		Attributes:     m.Attributes,
@@ -93,12 +93,18 @@ func NewModuleService() *ModuleService {
 			ID:             "decision",
 			Name:           "Decision Engine",
 			Description:    "Comprehensive decision management system with case handling and business rules engine",
+			Organization:   "stacc",
 			LastUpdated:    time.Now(),
 			Tags:           []string{"business-logic", "workflow", "rules-engine"},
 			Version:        "1.0.0",
-			InstallCommand: "blocc install decision",
 			Maintainer:     "Blocc Team",
-			Dependencies:   []ModuleDependency{},
+			Dependencies:   []ModuleDependency{
+				{
+					ID:      "control-panel",
+					Name:    "Control Panel",
+					Version: "1.0.0",
+				},
+			},
 			Attributes: ModuleAttributes{
 				Documentation: "https://docs.blocc.dev/decision",
 				License:       "Apache-2.0",
@@ -135,94 +141,65 @@ func NewModuleService() *ModuleService {
 			},
 		},
 		{
-			ID:             "redis-stack",
-			Name:           "Redis Stack",
-			Description:    "Redis with additional modules for advanced data structures",
+			ID:             "control-panel",
+			Name:           "Control Panel",
+			Description:    "Control Panel for managing rules and configurations",
+			Organization:   "stacc",
 			LastUpdated:    time.Now(),
-			Tags:           []string{"database", "cache"},
-			Version:        "7.2.0",
-			InstallCommand: "blocc install redis-stack",
-			Maintainer:     "Redis Labs",
+			Tags:           []string{"admin", "dashboard"},
+			Version:        "1.0.0",
+			Maintainer:     "Asset finance",
 			Dependencies: []ModuleDependency{
-				{
-					ID:      "redis-core",
-					Name:    "Redis Core",
-					Version: "7.2.0",
-				},
+				
 			},
 			Attributes: ModuleAttributes{
-				GithubRepo:    "https://github.com/sindresorhus/github-markdown-css",
-				Documentation: "https://redis.io/docs/stack/",
-				Website:       "https://redis.io/",
-				License:       "MIT",
+				GithubRepo:    "https://github.com/stacc/reimagined-tribble",
 			},
 			Components: []ModuleComponent{
 				{
-					ID:          "redis-server",
-					Name:        "Redis Server",
+					ID:          "control-panel-server",
+					Name:        "Control Panel Server",
 					Type:        ComponentTypeBackend,
-					Description: "Core Redis server with additional modules",
+					Description: "Core Control Panel server",
 				},
 				{
-					ID:          "redis-setup",
-					Name:        "Redis Setup",
-					Type:        ComponentTypeSetup,
-					Description: "Configuration and initialization scripts",
+					ID:          "control-panel-frontend",
+					Name:        "Control Panel Frontend",
+					Type:        ComponentTypeFrontend,
+					Description: "User interface for managing rules and configurations",
 				},
 			},
 		},
 		{
-			ID:             "postgresql-ha",
-			Name:           "PostgreSQL HA",
-			Description:    "High availability PostgreSQL cluster",
+			ID:             "flow",
+			Name:           "Flow",
+			Description:    "Process orchestration tool based on Camunda",
+			Organization:   "stacc",
 			LastUpdated:    time.Now().Add(-24 * time.Hour),
-			Tags:           []string{"database", "ha"},
+			Tags:           []string{"process"},
 			Version:        "15.4.0",
-			InstallCommand: "blocc install postgresql-ha",
-			Maintainer:     "Zalando",
-			Dependencies: []ModuleDependency{
-				{
-					ID:      "postgresql",
-					Name:    "PostgreSQL",
-					Version: "15.4.0",
-				},
-				{
-					ID:      "etcd",
-					Name:    "etcd",
-					Version: "3.5.0",
-				},
-			},
+			Maintainer:     "Workflow",
 			Attributes: ModuleAttributes{
 				GithubRepo:    "https://github.com/sindresorhus/github-markdown-css",
-				Documentation: "https://patroni.readthedocs.io/",
-				Website:       "https://www.postgresql.org/",
+				Documentation: "https://developer.stacc.dev/",
+				Website:       "https://www.stacc.com/",
 				License:       "Apache-2.0",
 			},
+			Dependencies:   []ModuleDependency{},
 			Components: []ModuleComponent{
 				{
-					ID:          "postgres-server",
-					Name:        "PostgreSQL Server",
+					ID:          "camunda",
+					Name:        "Camunda",
 					Type:        ComponentTypeBackend,
-					Description: "PostgreSQL database server",
+					Description: "Camunda process engine",
 				},
 				{
-					ID:          "patroni",
-					Name:        "Patroni",
+					ID:          "process",
+					Name:        "Process",
 					Type:        ComponentTypeBackend,
-					Description: "HA controller for PostgreSQL",
+					Description: "Process orchestration",
 				},
-				{
-					ID:          "pg-api",
-					Name:        "PostgreSQL API",
-					Type:        ComponentTypeApiGateway,
-					Description: "REST API for cluster management",
-				},
-				{
-					ID:          "pg-setup",
-					Name:        "PostgreSQL Setup",
-					Type:        ComponentTypeSetup,
-					Description: "Cluster initialization and configuration",
-				},
+				
 			},
 		},
 	}

@@ -145,7 +145,9 @@ export function ModuleDetail() {
           <h2 className="text-xl font-semibold mb-4">Installation</h2>
           <div className="flex gap-4 items-center">
             <Terminal>
-              <code>{module.installCommand}</code>
+              <code>
+                blocc install {module.id}@{module.version}
+              </code>
             </Terminal>
             <Button label="Install" onClick={() => setShowInstallModal(true)} />
           </div>
@@ -244,6 +246,11 @@ export function ModuleDetail() {
           <div>
             <h3 className="text-[11px] text-gray-500">By</h3>
             <p className="text-[13px] text-gray-900">{module.maintainer}</p>
+          </div>
+
+          <div>
+            <h3 className="text-[11px] text-gray-500">Organization</h3>
+            <p className="text-[13px] text-gray-900">{module.organization}</p>
           </div>
 
           <div>

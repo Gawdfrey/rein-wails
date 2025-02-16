@@ -194,7 +194,7 @@ function Palette({ children }: { children: React.ReactNode }) {
     (solution) => ({
       id: `solution-${solution.id}`,
       name: solution.name,
-      keywords: `${solution.name} ${solution.description} ${solution.customer}`,
+      keywords: `${solution.name} ${solution.description} ${solution.organization}`,
       subtitle: solution.description,
       perform: () =>
         navigate({

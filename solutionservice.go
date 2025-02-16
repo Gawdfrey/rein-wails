@@ -14,7 +14,7 @@ type Solution struct {
 	ID           string           `json:"id"`
 	Name         string           `json:"name"`
 	Description  string           `json:"description"`
-	Customer     string           `json:"customer"`
+	Organization string           `json:"organization"`
 	CreatedAt    time.Time        `json:"createdAt" ts_type:"string"`
 	UpdatedAt    time.Time        `json:"updatedAt" ts_type:"string"`
 	Modules      []SolutionModule `json:"modules"`
@@ -58,15 +58,15 @@ func NewSolutionService() *SolutionService {
 	// Initialize with mock data
 	solutions := []Solution{
 		{
-			ID:          "customer-a-core",
-			Name:        "Customer A Core Infrastructure",
-			Description: "Core infrastructure components for Customer A",
-			Customer:    "Customer A",
-			CreatedAt:   time.Now().Add(-30 * 24 * time.Hour),
-			UpdatedAt:   time.Now().Add(-2 * 24 * time.Hour),
+			ID:           "demo-solution",
+			Name:         "Demo Solution",
+			Description:  "A demo solution showcasing various modules",
+			Organization: "stacc",
+			CreatedAt:    time.Now().Add(-30 * 24 * time.Hour),
+			UpdatedAt:    time.Now().Add(-2 * 24 * time.Hour),
 			Modules: []SolutionModule{
-				{ModuleID: "redis-stack", Version: "7.2.0"},
-				{ModuleID: "postgresql-ha", Version: "15.4.0"},
+				{ModuleID: "flow", Version: "1.0.0"},
+				{ModuleID: "control-panel", Version: "1.0.0"},
 			},
 			Environments: []Environment{
 				{
@@ -76,8 +76,8 @@ func NewSolutionService() *SolutionService {
 					Status:       EnvironmentStatusRunning,
 					LastDeployed: time.Now().Add(-24 * time.Hour),
 					Modules: []EnvironmentModule{
-						{ModuleID: "redis-stack", Version: "7.2.0", Status: EnvironmentStatusRunning},
-						{ModuleID: "postgresql-ha", Version: "15.4.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "flow", Version: "1.0.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "control-panel", Version: "1.0.0", Status: EnvironmentStatusRunning},
 					},
 				},
 				{
@@ -87,8 +87,9 @@ func NewSolutionService() *SolutionService {
 					Status:       EnvironmentStatusRunning,
 					LastDeployed: time.Now().Add(-48 * time.Hour),
 					Modules: []EnvironmentModule{
-						{ModuleID: "redis-stack", Version: "7.2.0", Status: EnvironmentStatusRunning},
-						{ModuleID: "postgresql-ha", Version: "15.4.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "flow", Version: "1.0.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "control-panel", Version: "1.0.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "decision", Version: "1.0.0", Status: EnvironmentStatusRunning},
 					},
 				},
 				{
@@ -98,22 +99,22 @@ func NewSolutionService() *SolutionService {
 					Status:       EnvironmentStatusRunning,
 					LastDeployed: time.Now().Add(-72 * time.Hour),
 					Modules: []EnvironmentModule{
-						{ModuleID: "redis-stack", Version: "7.1.0", Status: EnvironmentStatusRunning},
-						{ModuleID: "postgresql-ha", Version: "15.3.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "flow", Version: "1.0.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "control-panel", Version: "1.0.0", Status: EnvironmentStatusRunning},
 					},
 				},
 			},
 		},
 		{
-			ID:          "customer-b-analytics",
-			Name:        "Customer B Analytics Platform",
-			Description: "Data analytics platform for Customer B",
-			Customer:    "Customer B",
-			CreatedAt:   time.Now().Add(-15 * 24 * time.Hour),
-			UpdatedAt:   time.Now().Add(-1 * 24 * time.Hour),
+			ID:           "production-solution",
+			Name:         "Production Solution",
+			Description:  "Main production environment setup",
+			Organization: "stacc",
+			CreatedAt:    time.Now().Add(-15 * 24 * time.Hour),
+			UpdatedAt:    time.Now().Add(-1 * 24 * time.Hour),
 			Modules: []SolutionModule{
-				{ModuleID: "redis-stack", Version: "7.2.0"},
-				{ModuleID: "postgresql-ha", Version: "15.4.0"},
+				{ModuleID: "flow", Version: "1.0.0"},
+				{ModuleID: "control-panel", Version: "1.0.0"},
 			},
 			Environments: []Environment{
 				{
@@ -123,8 +124,8 @@ func NewSolutionService() *SolutionService {
 					Status:       EnvironmentStatusRunning,
 					LastDeployed: time.Now().Add(-12 * time.Hour),
 					Modules: []EnvironmentModule{
-						{ModuleID: "redis-stack", Version: "7.2.0", Status: EnvironmentStatusRunning},
-						{ModuleID: "postgresql-ha", Version: "15.4.0", Status: EnvironmentStatusError},
+						{ModuleID: "flow", Version: "1.0.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "control-panel", Version: "1.0.0", Status: EnvironmentStatusRunning},
 					},
 				},
 				{
@@ -134,8 +135,8 @@ func NewSolutionService() *SolutionService {
 					Status:       EnvironmentStatusError,
 					LastDeployed: time.Now().Add(-36 * time.Hour),
 					Modules: []EnvironmentModule{
-						{ModuleID: "redis-stack", Version: "7.2.0", Status: EnvironmentStatusRunning},
-						{ModuleID: "postgresql-ha", Version: "15.4.0", Status: EnvironmentStatusError},
+						{ModuleID: "flow", Version: "1.0.0", Status: EnvironmentStatusRunning},
+						{ModuleID: "control-panel", Version: "1.0.0", Status: EnvironmentStatusRunning},
 					},
 				},
 			},

@@ -408,13 +408,19 @@ export class ModuleResponse {
              */
             this["description"] = "";
         }
-        if (!("lastUpdated" in $$source)) {
+        if (!("organization" in $$source)) {
             /**
-             * ISO date string
              * @member
              * @type {string}
              */
-            this["lastUpdated"] = "";
+            this["organization"] = "";
+        }
+        if (!("lastUpdated" in $$source)) {
+            /**
+             * @member
+             * @type {time$0.Time}
+             */
+            this["lastUpdated"] = null;
         }
         if (!("tags" in $$source)) {
             /**
@@ -429,13 +435,6 @@ export class ModuleResponse {
              * @type {string}
              */
             this["version"] = "";
-        }
-        if (!("installCommand" in $$source)) {
-            /**
-             * @member
-             * @type {string}
-             */
-            this["installCommand"] = "";
         }
         if (!("maintainer" in $$source)) {
             /**
@@ -475,13 +474,13 @@ export class ModuleResponse {
      * @returns {ModuleResponse}
      */
     static createFrom($$source = {}) {
-        const $$createField4_0 = $$createType3;
+        const $$createField5_0 = $$createType3;
         const $$createField8_0 = $$createType5;
         const $$createField9_0 = $$createType6;
         const $$createField10_0 = $$createType8;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("tags" in $$parsedSource) {
-            $$parsedSource["tags"] = $$createField4_0($$parsedSource["tags"]);
+            $$parsedSource["tags"] = $$createField5_0($$parsedSource["tags"]);
         }
         if ("dependencies" in $$parsedSource) {
             $$parsedSource["dependencies"] = $$createField8_0($$parsedSource["dependencies"]);
@@ -523,12 +522,12 @@ export class Solution {
              */
             this["description"] = "";
         }
-        if (!("customer" in $$source)) {
+        if (!("organization" in $$source)) {
             /**
              * @member
              * @type {string}
              */
-            this["customer"] = "";
+            this["organization"] = "";
         }
         if (!("createdAt" in $$source)) {
             /**

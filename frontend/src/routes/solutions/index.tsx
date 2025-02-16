@@ -40,7 +40,7 @@ export function SolutionList() {
                 <h2 className="text-xl font-semibold text-gray-800">
                   {solution.name}
                 </h2>
-                <p className="text-sm text-gray-500">{solution.customer}</p>
+                <p className="text-sm text-gray-500">{solution.organization}</p>
               </div>
               <div className="px-2 py-1 bg-gray-100 rounded text-xs text-gray-600">
                 {solution.environments.length} environments
