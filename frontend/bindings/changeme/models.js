@@ -261,6 +261,13 @@ export class ModuleAttributes {
              */
             this["license"] = "";
         }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {{ [_: string]: string } | undefined}
+             */
+            this["packages"] = {};
+        }
 
         Object.assign(this, $$source);
     }
@@ -271,7 +278,11 @@ export class ModuleAttributes {
      * @returns {ModuleAttributes}
      */
     static createFrom($$source = {}) {
+        const $$createField4_0 = $$createType2;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("packages" in $$parsedSource) {
+            $$parsedSource["packages"] = $$createField4_0($$parsedSource["packages"]);
+        }
         return new ModuleAttributes(/** @type {Partial<ModuleAttributes>} */($$parsedSource));
     }
 }
@@ -464,10 +475,10 @@ export class ModuleResponse {
      * @returns {ModuleResponse}
      */
     static createFrom($$source = {}) {
-        const $$createField4_0 = $$createType2;
-        const $$createField8_0 = $$createType4;
-        const $$createField9_0 = $$createType5;
-        const $$createField10_0 = $$createType7;
+        const $$createField4_0 = $$createType3;
+        const $$createField8_0 = $$createType5;
+        const $$createField9_0 = $$createType6;
+        const $$createField10_0 = $$createType8;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("tags" in $$parsedSource) {
             $$parsedSource["tags"] = $$createField4_0($$parsedSource["tags"]);
@@ -557,8 +568,8 @@ export class Solution {
      * @returns {Solution}
      */
     static createFrom($$source = {}) {
-        const $$createField6_0 = $$createType9;
-        const $$createField7_0 = $$createType11;
+        const $$createField6_0 = $$createType10;
+        const $$createField7_0 = $$createType12;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("modules" in $$parsedSource) {
             $$parsedSource["modules"] = $$createField6_0($$parsedSource["modules"]);
@@ -650,13 +661,14 @@ export class SystemInfo {
 // Private type creation functions
 const $$createType0 = EnvironmentModule.createFrom;
 const $$createType1 = $Create.Array($$createType0);
-const $$createType2 = $Create.Array($Create.Any);
-const $$createType3 = ModuleDependency.createFrom;
-const $$createType4 = $Create.Array($$createType3);
-const $$createType5 = ModuleAttributes.createFrom;
-const $$createType6 = ModuleComponent.createFrom;
-const $$createType7 = $Create.Array($$createType6);
-const $$createType8 = SolutionModule.createFrom;
-const $$createType9 = $Create.Array($$createType8);
-const $$createType10 = Environment.createFrom;
-const $$createType11 = $Create.Array($$createType10);
+const $$createType2 = $Create.Map($Create.Any, $Create.Any);
+const $$createType3 = $Create.Array($Create.Any);
+const $$createType4 = ModuleDependency.createFrom;
+const $$createType5 = $Create.Array($$createType4);
+const $$createType6 = ModuleAttributes.createFrom;
+const $$createType7 = ModuleComponent.createFrom;
+const $$createType8 = $Create.Array($$createType7);
+const $$createType9 = SolutionModule.createFrom;
+const $$createType10 = $Create.Array($$createType9);
+const $$createType11 = Environment.createFrom;
+const $$createType12 = $Create.Array($$createType11);

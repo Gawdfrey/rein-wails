@@ -6,10 +6,11 @@ import (
 )
 
 type ModuleAttributes struct {
-	GithubRepo    string `json:"githubRepo,omitempty"`
-	Documentation string `json:"documentation,omitempty"`
-	Website       string `json:"website,omitempty"`
-	License       string `json:"license,omitempty"`
+	GithubRepo    string            `json:"githubRepo,omitempty"`
+	Documentation string            `json:"documentation,omitempty"`
+	Website       string            `json:"website,omitempty"`
+	License       string            `json:"license,omitempty"`
+	Packages      map[string]string `json:"packages,omitempty"`
 }
 
 type ComponentType string
@@ -101,6 +102,10 @@ func NewModuleService() *ModuleService {
 			Attributes: ModuleAttributes{
 				Documentation: "https://docs.blocc.dev/decision",
 				License:       "Apache-2.0",
+				Packages: map[string]string{
+					"npm": "https://www.npmjs.com/package/@blocc/decision-engine",
+					"nuget": "https://www.nuget.org/packages/Blocc.DecisionEngine",
+				},
 			},
 			Components: []ModuleComponent{
 				{

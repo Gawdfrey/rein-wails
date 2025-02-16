@@ -278,6 +278,25 @@ export function ModuleDetail() {
               )}
             </div>
           </div>
+
+          {module.attributes.packages &&
+            Object.keys(module.attributes.packages).length > 0 && (
+              <div>
+                <h3 className="text-[11px] text-gray-500">Packages</h3>
+                <div className="space-y-1">
+                  {Object.entries(module.attributes.packages).map(
+                    ([registry, url]) => (
+                      <AttributeLink
+                        key={registry}
+                        href={url}
+                        icon={"📦"}
+                        label={registry}
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+            )}
         </div>
       </div>
 

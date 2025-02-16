@@ -72,7 +72,6 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "home",
       name: "Home",
-      shortcut: ["h"],
       keywords: "home landing",
       perform: () => navigate({ to: "/" }),
       section: "Navigation",
@@ -80,15 +79,13 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "modules",
       name: "Modules",
-      shortcut: ["m"],
       keywords: "modules browse search",
-      perform: () => navigate({ to: "/modules" }),
+      perform: () => navigate({ to: "/modules", search: { searchText: "" } }),
       section: "Navigation",
     },
     {
       id: "solutions",
       name: "Solutions",
-      shortcut: ["s"],
       keywords: "solutions customers environments",
       perform: () => navigate({ to: "/solutions" }),
       section: "Navigation",
@@ -96,7 +93,6 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "settings",
       name: "Settings",
-      shortcut: ["g"],
       keywords: "settings preferences configuration",
       perform: () => navigate({ to: "/settings" }),
       section: "Navigation",
@@ -106,11 +102,10 @@ function Palette({ children }: { children: React.ReactNode }) {
   // Configuration actions
   const configurationActions: CommandItem[] = [
     {
-      id: "env-config",
-      name: "Environment Configurations",
-      shortcut: ["c"],
-      keywords: "environment config yaml settings variables secrets",
-      section: "Configuration",
+      id: "settings",
+      name: "Settings",
+      keywords: "settings",
+      section: "Settings",
       icon: "⚙️",
       perform: () => navigate({ to: "/settings" }),
     },
@@ -122,7 +117,7 @@ function Palette({ children }: { children: React.ReactNode }) {
         subtitle: `Edit configuration for ${env.name} in ${solution.name}`,
         perform: () =>
           navigate({
-            to: "/solutions/$solutionId/environments/$environmentId",
+            to: "/solutions/$solutionId/environments/$environmentId/settings",
             params: { solutionId: solution.id, environmentId: env.id },
           }),
         section: "Configuration",
@@ -136,7 +131,6 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "add-environment",
       name: "Add Environment",
-      shortcut: ["e"],
       keywords: "create new environment add",
       section: "Quick Actions",
       icon: "🌍",
@@ -148,7 +142,6 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "install-module",
       name: "Install Module",
-      shortcut: ["i"],
       keywords: "install module package add",
       section: "Quick Actions",
       icon: "📦",
@@ -160,7 +153,6 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "sync-environment",
       name: "Sync Environment",
-      shortcut: ["y"],
       keywords: "sync refresh update environment",
       section: "Quick Actions",
       icon: "🔄",
@@ -172,7 +164,6 @@ function Palette({ children }: { children: React.ReactNode }) {
     {
       id: "edit-config",
       name: "Edit Configuration",
-      shortcut: ["k"],
       keywords: "edit configuration yaml settings variables secrets",
       section: "Quick Actions",
       icon: "📝",

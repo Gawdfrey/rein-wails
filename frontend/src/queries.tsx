@@ -7,7 +7,8 @@ import {
 
 export const queryKeys = {
   all: ["all"] as const,
-  getModules: () => [queryKeys.all, "modules"] as const,
+  getModules: (searchText?: string) =>
+    [queryKeys.all, "modules", searchText] as const,
   getModuleById: (id: string) => [queryKeys.getModules, id] as const,
   getModuleReadme: (id: string) =>
     [queryKeys.getModuleById(id), "readme"] as const,
@@ -17,10 +18,15 @@ export const queryKeys = {
 };
 
 export const queries = {
-  getModules: () =>
+  getModules: (searchText?: string) =>
     queryOptions({
-      queryKey: queryKeys.getModules(),
-      queryFn: () => ModuleService.GetModules(),
+      queryKey: queryKeys.getModules(searchText),
+      queryFn: () => {
+        if (searchText) {
+          return ModuleService.SearchModules(searchText);
+        }
+        return ModuleService.GetModules();
+      },
     }),
   getModuleById: (id: string) =>
     queryOptions({

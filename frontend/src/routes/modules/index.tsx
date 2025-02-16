@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SearchBar } from "../../components/SearchBar";
 import { ModuleGrid } from "../../components/ModuleGrid";
 import { queries } from "../../queries";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export const Route = createFileRoute("/modules/")({
   component: ModuleList,
@@ -11,16 +12,17 @@ export const Route = createFileRoute("/modules/")({
   },
 });
 
-interface ModuleListProps {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-}
-
-export function ModuleList({ searchQuery, onSearchChange }: ModuleListProps) {
-  const modulesQuery = useSuspenseQuery(queries.getModules());
-  const modules = modulesQuery.data;
+export function ModuleList() {
+  const [searchText, setSearchText] = useState("");
+  const modulesQuery = useQuery(queries.getModules(searchText));
+  const modules = modulesQuery.data ?? [];
   const error = modulesQuery.error;
   const loading = modulesQuery.isLoading;
+
+  function onSearchChange(value: string) {
+    setSearchText(value);
+  }
+
   return (
     <div className="flex-1 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#F8FAFF]">
@@ -36,7 +38,7 @@ export function ModuleList({ searchQuery, onSearchChange }: ModuleListProps) {
             </div>
           </div>
 
-          <SearchBar value={searchQuery} onChange={onSearchChange} />
+          <SearchBar value={searchText} onChange={onSearchChange} />
 
           {error && (
             <div className="mt-8 p-4 bg-red-50 text-red-700 rounded-lg">
