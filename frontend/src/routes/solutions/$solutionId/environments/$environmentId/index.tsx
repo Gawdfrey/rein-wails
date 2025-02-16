@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { Terminal } from "../../../../../components/Terminal";
 import { Button } from "@stacc/prism-ui";
+import { DependencyGraph } from "../../../../../components/DependencyGraph";
 
 export const Route = createFileRoute(
   "/solutions/$solutionId/environments/$environmentId/"
@@ -453,6 +454,24 @@ export function EnvironmentDetail() {
               Select a component to view logs
             </div>
           )}
+        </div>
+      </div>
+      {/* Module Dependencies Graph */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          Dependencies
+        </h2>
+        <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="h-[300px]">
+            <DependencyGraph
+              moduleName={environment.name}
+              dependencies={moduleComponents.map((module) => ({
+                id: module.moduleId,
+                name: module.moduleName,
+                version: module.version,
+              }))}
+            />
+          </div>
         </div>
       </div>
     </div>
